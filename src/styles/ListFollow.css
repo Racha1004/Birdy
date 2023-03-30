@@ -1,0 +1,47 @@
+.followHome{
+    position: fixed;
+    top: 10rem;
+    left: 60%;
+    background-color: white;
+    width: 35rem;
+}
+.followProfil{
+    position: absolute;
+    width: 35rem;
+    margin-left: 95rem;
+    margin-top: 1.5rem;
+    background-color: white;
+
+}
+
+.follow-heading{
+    padding: 1rem;
+    font-size: 1.8rem;
+    border-bottom: 0.1rem solid #eee;
+}
+
+
+.follow-link{
+    margin: 2rem 1rem;
+}
+.follow-link a{
+    text-decoration: none;
+    color: rgb(41, 88, 241);
+    font-size: 1.5rem;
+}
+
+.follow-footer{
+    background-color: #f0f8fd;
+}
+.follow-footer ul{
+    list-style-type: none;
+    display: flex;
+    padding: 2rem 0;
+}
+
+.follow-footer a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color:#868383;
+    margin: 0 0.7rem;
+}

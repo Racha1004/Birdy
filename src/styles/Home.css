@@ -1,0 +1,85 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    background-color: #f0f8fd;
+}
+/* Accueil css */
+.feeds-page{
+    width: 100%;
+    height: 100vh;
+}
+.feeds-content{
+    padding-top: 1.6rem;
+    display: grid;
+    grid-template-rows: repeat(2,min-content);
+}
+.header-top{
+    display: flex;
+    align-items: center;    
+    justify-content: space-between;
+    border-bottom: 0.1rem solid #eee;
+    padding: 1.5rem;
+}
+.header-top h4{
+    font-size: 2.2rem;
+}
+.header-top .icon{
+    font-size: 2.5rem;
+    color:rgb(41, 88, 241);
+}
+/* Nouveau tweeet*/
+
+.feeds-content{
+    display: grid;
+    grid-template-columns: minmax(5rem,1fr) 60rem 40rem minmax(5rem,1fr);
+    grid-template-rows: repeat(2,min-content);
+    padding-top: 10rem;
+}
+
+/* Pour les publications posts*/
+.flexContent{
+    margin-left: 20rem;
+    margin-right: 20rem;
+    display: flex;
+    padding-top: 10rem;
+}
+
+/*Suggestion d'amis*/
+.friends{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+}
+.wrapFriend{
+    width: 35rem;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.6rem;
+}
+
+
+/* Post button */
+.post-btn{
+    position: fixed;
+    bottom: 2rem;
+    left: 68%;
+    width: 12rem;
+    padding: 1.5rem 1rem;
+    background-color: rgb(41, 88, 241);
+    color: white;
+    font-size: 2rem;
+    border: 0.1rem solid rgb(41, 88, 241);
+    border-radius:3rem;
+    cursor: pointer;
+    box-shadow: 0 0.3rem 1rem black;
+    transition: background-color 0.3s;
+}
+
+.post-btn:hover{
+    background-color: rgb(10, 23, 207) ;
+}

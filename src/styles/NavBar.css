@@ -1,0 +1,101 @@
+.feeds-nav{
+    position: fixed;
+    width: 100%;
+    height: 6.5rem;
+    background-color:#fff;
+    display: flex;
+    box-shadow: 0 0 0.7rem rgba(0,0,0, 0.3);
+}
+.logo{
+    display:flex ;
+    align-items: center;
+    justify-content: left;
+    width: 15.75rem;
+    margin-left: 5rem;
+}
+.logo .icon{
+    text-decoration: none;
+    margin-left: 0rem;
+    font-size: 3.5rem;
+    color: rgb(41, 88, 241);
+
+}
+.flex{
+    margin-left: 2rem;
+    display: flex;
+    justify-content: center;
+    
+}
+.icons{
+    display: flex;
+    align-items: center;
+    margin-left: 6rem;
+
+}
+.icons a{
+    text-decoration: none;
+    margin-right: 7rem;
+    font-size: 2.5rem;
+    color: grey;
+}
+.icons .active {
+    color: rgb(41, 88, 241);
+}
+.search-bar{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60rem;
+}
+.search-bar-input {
+    width: 49rem;
+    height: 3.5rem;
+    border: 0.1rem solid rgb(230, 226, 226);
+    border-radius: 3rem;
+    background-color:rgb(230, 226, 226);
+    padding-left: 5rem;
+    transition:  all 0.3s;
+    font-size: 1.8rem;
+
+}
+.checkBox{
+    margin: auto;
+}
+.search-bar-input:focus{
+    background-color: white;
+    border-color: rgb(41, 88, 241);
+}
+.search-bar .icon {
+    position: absolute;
+    font-size: 1.6rem;
+    left: 1.6rem;
+    color: rgb(41, 88, 241);
+}
+.user{
+    margin-left:  0rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 15rem ;
+}
+.user-img-wrapper{
+    width: 4rem;
+    height: 4rem;
+}
+
+.user-img-wrapper img {
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.user-link{
+    margin :0 1rem;
+    text-decoration: none;
+    font-size: 1.8rem;
+    color: black;
+}
+.user .icon {
+    color : black; 
+    font-size: 1.2rem;
+}

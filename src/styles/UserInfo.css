@@ -1,0 +1,38 @@
+
+.rightBarInfo{
+    background-color: white;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    padding :2rem;
+    border-radius: 10%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
+
+}
+.rightBarTitle{
+    background-color: rgb(10, 23, 207) ;
+    height: 2rem;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    border-bottom: solid 0.5px grey;
+    text-align: center;
+
+}
+
+.rightBarInfoItem{
+    margin-bottom: 1rem;
+    padding-left: 5rem;
+    font-size: 1.8rem;
+}
+.rightBarInfoKey{
+    font-weight: 500;
+    margin-right: 1rem;
+    color: #555;
+}
+.rightBarInfoValue{
+    padding-left: 2rem;
+}
