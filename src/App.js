@@ -1,3 +1,4 @@
+import Form from "./components/Form";
 import Home from "./components/Home";
 import Profil from "./components/Profil";
 import{
@@ -15,6 +16,9 @@ function App(){
                 </Route>           
                 <Route path="/profil/:username" >
                     <Profil/>
+                </Route>
+                <Route path="/formulaire" >
+                    <Form/>
                 </Route>
             </Switch>
         </Router>
