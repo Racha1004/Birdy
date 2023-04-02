@@ -24,36 +24,27 @@ body{
 }
 */
 /* Nouveau tweeet*/
-
-/*Photo de couverture et de profil*/
 .profile{
-    flex: 9;
+    display: flex;
+    padding-top:6.5rem;
 }
-
+.profile-content{
+    flex: 5;
+    margin-right: 10rem;
+    margin-top: 1rem;
+}
 /* Pour les publications posts et les amis*/
 .flex{
     justify-content: center;
-    margin-right: 20rem;
-    margin-left: 20rem;
-}
-/*Publications*/
-
-.feeds-content{
-    padding-top: 1.6rem;
-    display: grid;
-    grid-template-rows: repeat(2,min-content);
-    width: 70%;
 }
 /*Barre infos + amis*/
-.sideBar{
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.6rem;
-    margin-left: 1rem;
-    width: 30%;
-}
+
 .friends {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+}
+
+.RACYA{
+    height: 10rem;
 }
 /* Post button *********************************************/
 .post-btn{
