@@ -29,7 +29,7 @@ const Form = () => {
       <div>
       {shouldRedirect && <Redirect to="/" />}
         <h2>{isNewUser ? 'Créer un compte' : 'Se connecter'}</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='formulaire_login'>
           <div>
             <input
               type="text"

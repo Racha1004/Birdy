@@ -42,7 +42,7 @@ function NewPost({page}){
                 </label>
                 <FaImage className="icon" />
                 <FaChartBar className="icon" />
-                <button type="submit"> tik</button>
+                <button type="submit" className="postMessage">tak</button>
             </form>
         </div>
     );
