@@ -5,7 +5,7 @@ import Feed from "./Feed";
 import '../styles/Home.css'
 import {Users} from "../Data/Users.js";
 import Follow from "./Follow";
-
+import SideBar from "./SideBar";
 
 function Home(){
 
@@ -13,6 +13,7 @@ function Home(){
         <section className="feeds-page">
             <NavBar/>
             <div className="flexContent">
+                <SideBar />
                 <Feed page="Home"/>
                 <div className="wrapFriend">
                     <div className="friends">
@@ -23,7 +24,7 @@ function Home(){
                 </div>
             </div>
             
-            
+            <footer className="footer">Footer</footer>
         </section>
     );
 }

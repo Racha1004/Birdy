@@ -10,6 +10,7 @@ import ProfileTop from "./ProfileTop";
 import UserInfo from "./UserInfo";
 import {Users} from "../Data/Users.js";
 import { useParams } from "react-router-dom";
+import SideBar from "./SideBar";
 function Profil(){
 
     const [user,setUser] =useState({});
@@ -25,20 +26,24 @@ function Profil(){
         <section className="feeds-page">
             <NavBar/>
             <div className="profile">
-                <ProfileTop />  
-                <div className="flex" >
-                    <Feed page="Profile"/>
-                    <div className="sideBar">
-                        <UserInfo user={user}/>
-                        <div className="friends">
-                        {Users.map((u)=>(
-                            <Follow key={u.id} user={u} />
-                        ))}  
+                <SideBar />
+                <div className="profile-content">
+                    <ProfileTop />  
+                    <div className="flex" >
+                        <Feed page="Profile"/>
+                        <div className="sideBar">
+                            <UserInfo user={user}/>
+                            <div className="friends">
+                            {Users.map((u)=>(
+                                <Follow key={u.id} user={u} />
+                            ))}  
+                            </div>
                         </div>
                     </div>
+                
                 </div>
-               
             </div>
+            <footer className="RACYA" >HETE</footer>
         </section>
     );
 }
