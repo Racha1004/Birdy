@@ -1,0 +1,34 @@
+.follow-user{
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 0.1rem solid #eee;
+    background-color: white;
+}
+.follow-user-img{
+    width: 6rem;
+    height: 6rem;
+    margin-right: 2rem;
+}
+.follow-user-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.follow-user-info h4,
+.follow-user-info p{
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+.follow-btn{
+    margin-left: auto;
+    width: 9rem;
+    background-color: white;
+    color:rgb(41, 88, 241) ;
+    padding: 0.7rem 0.5rem;
+    border: 0.1rem solid rgb(41, 88, 241);
+    border-radius: 2rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
