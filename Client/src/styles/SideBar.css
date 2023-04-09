@@ -1,12 +1,25 @@
 .sideBar{
     flex : 1.5;
-    height: calc(100vh- 6.5rem);
+    height: calc(100vh - 7.5rem);
     font-size: 2rem;
     background-color: white;
     margin: 1rem; /*Ici c'est moi posible probleme*/
+    overflow-y:scroll;
+    position: sticky;
+    top : 8rem;
+}
+::-webkit-scrollbar{
+    width: 10px;
+}
+::-webkit-scrollbar-track{
+    background-color: aqua;
+}
+::-webkit-scrollbar-track{
+    background-color: blue;
 }
 .sideBarWrapper{
     padding: 4rem;
+
 }
 .sidebarList{
     padding: 0;

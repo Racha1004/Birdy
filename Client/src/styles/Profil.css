@@ -16,13 +16,6 @@ body{
     height: 100vh;
     /*display : flex;*/
 }
-/*
-<<div className="flex2">fdfdf</div>
-.flex2{
-    background-color: red;
-    width: 30rem;
-}
-*/
 /* Nouveau tweeet*/
 .profile{
     display: flex;
@@ -38,11 +31,12 @@ body{
     justify-content: center;
 }
 /*Barre infos + amis*/
-
-.friends {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+.rightBar{
+    flex : 1.5;
+    height: calc(100vh- 6.5rem);
+    font-size: 2rem;
+    margin: 1rem; /*Ici c'est moi posible probleme*/
 }
-
 .RACYA{
     height: 10rem;
 }

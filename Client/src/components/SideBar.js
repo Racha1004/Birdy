@@ -3,6 +3,7 @@ import React from "react";
 import '../styles/SideBar.css'
 import {FaHome,FaHashtag,FaBell,FaEnvelope,FaSearch,FaChevronDown} from "react-icons/fa";
 import {CgProfile} from "react-icons/cg";
+import ListFollow from "./ListFollow";
 
 
 function SideBar(){
@@ -35,9 +36,12 @@ function SideBar(){
                         <CgProfile className="sideBarIcon"/>
                         <span className="sideBarItemText">Profil</span>
                     </li>
+                    
                 </ul>
-                
+                <div className="Stat" >Les stat sont :        10  ,,  100</div>
             </div>
+            <ListFollow nom = "Following"/>
+
         </div>
     );
 }

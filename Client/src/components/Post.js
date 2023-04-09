@@ -1,21 +1,24 @@
 import React, { useState,useEffect, useContext } from "react";
-import bird from "./Images/bird.png";
 import {AiOutlineHeart,AiFillHeart} from "react-icons/ai";
 import {FaCheckCircle,FaRegComment} from "react-icons/fa";
-import {Users} from "../Data/Users.js"; //=> APRES FAUT LE SUUPIMER
 import "../styles/Post.css";
-
+import axios from "axios";
+import {format} from "timeago.js";
+import {Link} from "react-router-dom";
 function Post({post}){
-    const [like,setLike] = useState(post.like);
+    const [like,setLike] = useState(post.likes.length);
     const [isLiked,setIsLiked] = useState(false);
     const [user,setUser] =useState({});
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     //const {user:currentUser} = useContext();
     useEffect (()=>{
-        /*const fetchUser = async ()=>{
-            const res = await axios.get(`users/${post.userId}`)
-            setUser(res.data)
+        const fetchUser = async ()=>{
+            const res = await axios.get(`api/users/${post.userId}`)
+            setUser(res.data);
+            console.log("here"+user.profilePicture);
         };
-        fetchPosts();*/
+        fetchUser();
     },[post.userId])
     /*
     useEffect(()=>{
@@ -27,24 +30,24 @@ function Post({post}){
         setLike(isLiked ? like-1 : like+1);
         setIsLiked(!isLiked);
     }
-    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     return(
         <div className="post">
             <div className="user-avatar">
-            <img src={PF+Users.filter((u)=> u.id === post?.userId)[0].profilePicture}/>
-            {/*<img src={user.profilePicture || PF+"profil.PNG" }/>*/}
+                <Link to ={`profil/${user.pseudo}`} className="link-user-avatar" >
+                  <img src={user.profilePicture || PF + "profil.png"} />
+                </Link>
             </div>
             <div className="post-content">
                 <div className="post-user-info">
-                    <h4>{Users.filter((u)=> u.id === post?.userId)[0].username}</h4>
+                    <h4>{user.pseudo}</h4>
                     <FaCheckCircle className="icon"/>
-                    <span> @hahaha . {post?.date}</span>
-                </div>
+                    <span> @hahaha . {format(post.createdAt)}</span>
+                </div> 
                 <p className="post-text">
-                   {post?.desc}
+                   {post?.description}
                 </p>
                 <div className="post-img">
-                    <img src={PF+post.photo} alt="post"/>
+                    <img src={PF+post.image} alt="post"/>
                 </div>
                 <div className="post-icons">
                     <div className="icon"  ><FaRegComment /> {post.comment}</div>

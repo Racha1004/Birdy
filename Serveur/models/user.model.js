@@ -27,27 +27,27 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: './profil.PNG'
+      default: ""
     },
     coverPicture: {
       type: String,
-      default: './profil.PNG'
+      default: ""
     },
     bio: {
       type: String,
       maxlength: 1024
     },
     followers: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'user'
+      type: Array,
+      default : []
     },
     following: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'user'
+      type: Array,
+      default : []
     },
     likes: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'tweet'
+      type: Array,
+      default : []
     }
   },
   {

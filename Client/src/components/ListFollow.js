@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Follow from "./Follow";
+import {Users} from "../Data/Users.js";
 import "../styles/ListFollow.css";
-function ListFollow({nom,css}){
+function ListFollow({nom}){
     const [friends,setFriends]=useState([]);
     useEffect (()=>{
         /*const fetchFriends = async ()=>{
@@ -11,28 +12,18 @@ function ListFollow({nom,css}){
         fetchPosts();*/
     },[])
     return (
-        <div className={`follow${css}`}>
+        <div className="wrapFriend">
             <h3 className="follow-heading"> {nom} </h3>
-            <Follow/>
-            <Follow/>
-            <Follow/>
-            <Follow/>
-            {/*friends.map((u)=>(
-                 <Follow key={u.id} user={u} />
-            ))*/}  
-            <div class="follow-link">
+            <div className="friends">
+                {Users.map((u)=>(
+                    <Follow key={u.id} user={u} />
+                ))}  
+            </div>  
+
+            <div className="follow-link">
 					<a href="#" >Show more</a>
 			</div>
-            <footer class="follow-footer">
-                <ul>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookieq</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">More</a></li>
-
-                </ul>
-            </footer>
+            
         </div>
     )
 }
