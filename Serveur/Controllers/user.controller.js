@@ -24,7 +24,6 @@ module.exports.updateUser = async (req, res) => {
         return res.status(400).send('ID inconnu : ' + req.params.id)
 
     try {
-        console.log("test1");
         const updatedUser = await UserModel.findOneAndUpdate(
             {_id: req.params.id}, //condition to find the user to update 
             {
@@ -34,7 +33,6 @@ module.exports.updateUser = async (req, res) => {
             },
             {new: true, upsert: true, setDefaultsOnInsert: true} //options to return the updated user, param a mettre obligatoirement 
         );
-        console.log("test3");
         res.send(updatedUser);
     } catch(err) {
         console.log('ID inconnu : ' + err);
