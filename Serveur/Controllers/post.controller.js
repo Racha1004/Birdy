@@ -177,24 +177,23 @@ module.exports.commentPost = async (req, res) => {
 module.exports.editCommentPost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknown : " + req.params.id);
-
     try {
-        const updatedPost = await PostModel.findById(req.params.id);
-        const comment = updatedPost.comments.find(
-            (comment) => comment._id.toString() === req.body.commentId
-        );
-        if (!comment) return res.status(404).send("Comment not found");
-        if (comment.commenterId.toString() !== req.body.commenterId)
-            return res.status(401).send("Unauthorized");
-        comment.text = req.body.text;
-        const result = await updatedPost.save();
-        return res.status(200).json(result);
-    } catch (err) {
+        return PostModel.findById(req.params.id, (err, docs) => {
+          const theComment = docs.comments.find((comment) =>
+            comment._id.equals(req.body.commentId)
+          );
+    
+          if (!theComment) return res.status(404).send("Comment not found");
+          theComment.text = req.body.text;
+    
+          return docs.save((err) => {
+            if (!err) return res.status(200).send(docs);
+            return res.status(500).send(err);
+          });
+        });
+      } catch (err) {
         return res.status(400).send(err);
-
     }
-
-
 }
 
 // Delete a comment
