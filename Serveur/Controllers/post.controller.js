@@ -176,27 +176,44 @@ module.exports.commentPost = async (req, res) => {
 // Edit a comment
 module.exports.editCommentPost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
-    return res.status(400).send("ID unknown : " + req.params.id);
+      return res.status(400).send("ID unknown : " + req.params.id);
     try {
-        return PostModel.findById(req.params.id, (err, docs) => {
-          const theComment = docs.comments.find((comment) =>
-            comment._id.equals(req.body.commentId)
-          );
-    
-          if (!theComment) return res.status(404).send("Comment not found");
-          theComment.text = req.body.text;
-    
-          return docs.save((err) => {
-            if (!err) return res.status(200).send(docs);
-            return res.status(500).send(err);
-          });
-        });
-      } catch (err) {
-        return res.status(400).send(err);
+      const post = await PostModel.findById(req.params.id);
+      if (!post) return res.status(404).send("Post not found");
+      
+      const comment = post.comments.find((c) => c._id.equals(req.body.commentId));
+      if (!comment) return res.status(404).send("Comment not found");
+      comment.text = req.body.text;
+      
+      await post.save();
+      res.status(200).send(post);
+    } catch (err) {
+      return res.status(400).send(err);
     }
-}
-
+  }
+  
 // Delete a comment
 module.exports.deleteCommentPost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+      return res.status(400).send("ID unknown : " + req.params.id);
+
+    try{
+        const updatedPost = await PostModel.findByIdAndUpdate(
+            req.params.id,
+            {
+            $pull: {
+                comments: {
+                _id: req.body.commentId,
+                },
+            },
+            },
+            { new: true }
+        );
+        return res.status(201).json(updatedPost);
+
+    } catch (err){
+        return res.status(400).send(err);
+    }
+
     
 }
