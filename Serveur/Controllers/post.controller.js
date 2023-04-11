@@ -37,7 +37,7 @@ module.exports.createPost = async (req, res) => {
 // Find a single post with a postId
 module.exports.getPostById = async (req, res) => {
 
-    if(!ObjectId.isValid(req.params.id))
+    if(!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknow : " + req.params.id);
 
     try {
@@ -51,7 +51,7 @@ module.exports.getPostById = async (req, res) => {
 
 // Update a post identified by the postId in the request
 module.exports.updatePost = async (req, res) => {
-    if(!ObjectId.isValid(req.params.id))
+    if(!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknow : " + req.params.id);
     
     const updatedRecord = {
@@ -69,7 +69,7 @@ module.exports.updatePost = async (req, res) => {
 
 // Delete a post with the specified postId in the request
 module.exports.deletePost = async (req, res) => {
-    if(!ObjectId.isValid(req.params.id))
+    if(!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknow : " + req.params.id);
 
     try { 
