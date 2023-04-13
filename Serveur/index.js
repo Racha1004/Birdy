@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.router');
 const postRoutes = require('./routes/post.router');
+const morgan = require("morgan");
+
 require('dotenv').config({path: './config/.env'});
 require('./config/db');
 const {checkUser,requireAuth} = require('./middleware/auth.middleware');
@@ -22,6 +24,8 @@ app.get('/jwtid',requireAuth,(req,res) => {
 //routes
 app.use('/api/user',userRoutes);
 app.use('/api/post',postRoutes);
+
+app.use(morgan("common"));
 
 //serveur 
 app.listen(process.env.PORT,() => {

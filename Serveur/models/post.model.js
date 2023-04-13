@@ -2,7 +2,23 @@ const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema(
   {
-    posterId: {
+    
+    /*userId : {
+        type: String,
+        required :true,
+    },
+    description : {
+        type:String,
+        max : 500,
+    },
+    image:{
+        type:String,
+    },
+    likes: {
+    type:Array,
+    default:[],
+    },*/
+        posterId: {
         type : String,
         required: true
     },
@@ -21,7 +37,7 @@ const PostSchema = new mongoose.Schema(
     },
     likers: {
         type: [String],
-        required : true
+        default : [],
     },
     comments: {
         type: [

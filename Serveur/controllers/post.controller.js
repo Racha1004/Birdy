@@ -48,6 +48,22 @@ module.exports.getPostById = async (req, res) => {
     }
     
 }
+// Find all posts on a user's feed
+module.exports.getTimeLinePosts = async(req,res)=>{
+  try{
+      const currentUser = await UserModel.findById(req.params.userId);
+      const userPosts = await PostModel.find({posterId : currentUser._id});
+      const friendPosts = await Promise.all(
+          currentUser.following.map((friendId)=>{
+              return PostModel.find({posterId:friendId});
+          })
+      );
+      console.log(currentUser);
+      res.status(200).json(userPosts.concat(...friendPosts));
+  }catch(error){
+      res.status(500).json(error);
+  }
+}
 
 // Update a post identified by the postId in the request
 module.exports.updatePost = async (req, res) => {

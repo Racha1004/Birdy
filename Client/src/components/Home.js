@@ -6,6 +6,7 @@ import '../styles/Home.css'
 import {Users} from "../Data/Users.js";
 import Follow from "./Follow";
 import SideBar from "./SideBar";
+import ListFollow from "./ListFollow";
 
 function Home(){
 
@@ -14,13 +15,9 @@ function Home(){
             <NavBar/>
             <div className="flexContent">
                 <SideBar />
-                <Feed page="Home"/>
-                <div className="wrapFriend">
-                    <div className="friends">
-                        {Users.map((u)=>(
-                            <Follow key={u.id} user={u} />
-                        ))}  
-                    </div>
+                <Feed page="Home" />
+                <div className="rightBar">
+                    <ListFollow nom="To follow" />
                 </div>
             </div>
             

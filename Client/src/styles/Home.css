@@ -20,23 +20,15 @@ body{
     display: flex;
     width: 100%;
     padding-top:7rem;
-    justify-content: space-between;
+    margin-right: rem;
 }
 
 /*ici content feed*/
 
 
 /*Suggestion d'amis*/
-.friends{
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
-}
-.wrapFriend{
-    padding-top: 1rem;
-    flex : 2;
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    margin-right: 1rem;
+.rightBar{
+    flex: 2;
 }
 
 .footer{

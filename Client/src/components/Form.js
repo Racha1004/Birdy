@@ -25,7 +25,7 @@ const Form = () => {
   };
 
   return (
-    <Router>
+    <Router className="formulaire">
       <div>
       {shouldRedirect && <Redirect to="/" />}
         <h2>{isNewUser ? 'Créer un compte' : 'Se connecter'}</h2>

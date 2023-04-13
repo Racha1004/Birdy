@@ -17,35 +17,37 @@ const userSchema = new mongoose.Schema(
       required: true,
       validate: [isEmail],
       lowercase: true,
-      unique: true, // ajouter cette ligne pour rendre l'email unique
       trim: true
     },
-    
     password: {
       type: String,
       required: true,
-      max: 1024,
+      maxlength: 1024,
       minlength: 8
     },
-    picture: {
+    profilePicture: {
       type: String,
-      default: './uploads/profil/random-user.png'
+      default: ""
+    },
+    coverPicture: {
+      type: String,
+      default: ""
     },
     bio: {
       type: String,
       maxlength: 1024
     },
     followers: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'user'
+      type: Array,
+      default : []
     },
     following: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'user'
+      type: Array,
+      default : []
     },
     likes: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'tweet'
+      type: Array,
+      default : []
     }
   },
   {
