@@ -14,7 +14,7 @@ function App(){
                 <Route exact path="/" >
                     <Home />
                 </Route>           
-                <Route path="/profil/:username" >
+                <Route path="/profile/:username" >
                     <Profil/>
                 </Route>
                 <Route path="/formulaire" >

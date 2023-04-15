@@ -3,18 +3,21 @@ import Post from "./Post";
 import NewPost from "./NewPost";
 import "../styles/Feed.css";
 import axios from "axios";
-function Feed({page}){
+function Feed({page, username}){
     const [posts,setPosts] = useState([]);
     //POur chercher les posts dun user
     //const {user}= useContext()
     useEffect (()=>{
         const fetchPosts = async ()=>{
-            const res = await axios.get("api/post/feed/all/64381cf84bedd92848ccf579");
+            const res = username 
+                ? await axios.get("/post/profile/" + username) 
+                : await axios.get("/post/feed/all/64381cf84bedd92848ccf579");
             setPosts(res.data);
-            console.log(posts);
         };
         fetchPosts();
-    },[])
+        console.log(posts);
+
+    },[username])
     return (
         <div className="feeds-content">
             <NewPost page={page} />

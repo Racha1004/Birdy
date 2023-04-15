@@ -14,7 +14,20 @@ module.exports.getPost = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+// get  user's all posts 
+module.exports.getAllUsersPosts= async (req, res) => {
+  try{
+    const currentUser = await UserModel.findOne({pseudo : req.params.username});
+    console.log(req.params.username);
 
+    const userPosts = await PostModel.find({posterId : currentUser._id});
+    res.status(200).json(userPosts);
+    console.log(userPosts);
+  }catch(error){
+    res.status(500).json(err);
+  }
+
+};
 // Create and Save a new Post
 module.exports.createPost = async (req, res) => {
     const newPost = new PostModel({
@@ -98,7 +111,7 @@ module.exports.deletePost = async (req, res) => {
         res.status(500).send("Delete error");
     }     
 }
-
+/*
 // Like a post
 module.exports.likePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
@@ -120,6 +133,7 @@ module.exports.likePost = async (req, res) => {
         { new: true }
       );
       res.send({ updatedPost, updatedUser });
+      console.log("aimé");
     } catch (err) {
       return res.status(400).send(err);
     }
@@ -156,12 +170,28 @@ module.exports.unlikePost = async (req, res) => {
         if (!user) {
             return res.status(404).send("User not found");
         }
+        console.log("Not aimé");
         return res.status(200).json(user);
     } catch (err) {
         return res.status(400).send(err.message);
     }
 };
-      
+*/
+///My version mike racha    
+module.exports.likepost = async (req, res) => {
+  try{
+      const post = await PostModel.findById(req.params.id);
+      if(!post.likers.includes(req.body.id)){
+          await post.updateOne({$push : {likers:req.body.id}});
+          res.status(200).json("The post has been liked");
+      }else{
+          await post.updateOne({$pull : {likers:req.body.id}});
+          res.status(200).json("The post has been disliked");
+      }
+  }catch(error){
+      res.status(500).json(error);
+  }
+};
 // Comment a post
 module.exports.commentPost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))

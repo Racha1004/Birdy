@@ -7,12 +7,18 @@
     box-shadow: 0 0 0.7rem rgba(0,0,0, 0.3);
     z-index: 999;
 }
+.nomSite{
+    color:rgb(41, 88, 241) ;
+    font-size: 1.9rem;
+    font-weight:bolder;
+}
 .logo{
     display:flex ;
     align-items: center;
     justify-content: left;
     width: 15.75rem;
     margin-left: 5rem;
+    text-decoration-line: none;
 }
 .logo .icon{
     text-decoration: none;
@@ -78,6 +84,7 @@
     align-items: center;
     cursor: pointer;
     width: 15rem ;
+    text-decoration: none;
 }
 .user-img-wrapper{
     width: 4rem;
