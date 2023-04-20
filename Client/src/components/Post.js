@@ -43,7 +43,7 @@ function Post({post}){
                     <span> @hahaha . {format(post.createdAt)}</span>
                 </div> 
                 <p className="post-text">
-                   {post?.description}
+                   {post?.message}
                 </p>
                 <div className="post-img">
                     <img src={PF+post.image} alt="post"/>
