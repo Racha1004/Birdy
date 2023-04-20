@@ -111,7 +111,7 @@ module.exports.deletePost = async (req, res) => {
         res.status(500).send("Delete error");
     }     
 }
-/*
+
 // Like a post
 module.exports.likePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
@@ -176,7 +176,7 @@ module.exports.unlikePost = async (req, res) => {
         return res.status(400).send(err.message);
     }
 };
-*/
+
 ///My version mike racha    
 module.exports.likepost = async (req, res) => {
   try{

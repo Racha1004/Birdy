@@ -1,15 +1,16 @@
 const router = require('express').Router();
 const postController = require('../controllers/post.controller');
 
-router.get('/', postController.getPost);
-router.get('/:id', postController.getPostById);
-router.get('/profile/:username', postController.getAllUsersPosts);
 router.post('/', postController.createPost);
 router.put('/:id', postController.updatePost);
 router.delete('/:id', postController.deletePost);
-//router.patch('/like-post/:id', postController.likePost);
+
+router.get('/', postController.getPost);
+router.get('/:id', postController.getPostById);
+router.get('/profile/:username', postController.getAllUsersPosts);
+router.patch('/like-post/:id', postController.likePost);
 router.patch('/:id/like', postController.likepost);
-//router.patch('/unlike-post/:id', postController.unlikePost);
+router.patch('/unlike-post/:id', postController.unlikePost);
 router.get("/feed/all/:userId", postController.getTimeLinePosts);
 
 // Comment a post
