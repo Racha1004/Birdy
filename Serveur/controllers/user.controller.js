@@ -7,14 +7,16 @@ module.exports.getAllUsers = async (req, res) => {
 }
 
 module.exports.userInfo = async (req, res) => {
-    if(!ObjectId.isValid(req.params.id))
-        return res.status(400).send('ID inconnu : ' + req.params.id)
+    const userId = req.query.userId;
+    const username = req.query.username;
+    try{
+        const user = userId 
+        ? await UserModel.findById(userId).select('-password')
+        : await UserModel.findOne({ pseudo: username }).select('-password');;
 
-    try {
-        const user = await UserModel.findById(req.params.id).select('-password');
         res.send(user);
     } catch(err) {
-        console.log('ID inconnu : ' + err);
+        return res.status(400).send('ID / username inconnu');
     }
 }
 

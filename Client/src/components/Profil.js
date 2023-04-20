@@ -8,26 +8,27 @@ import UserInfo from "./UserInfo";
 import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
+import axios from "axios";
 function Profil(){
 
     const [user,setUser] =useState({});
-    /*const username = useParams().username;
+    const username = useParams().username;
     useEffect (()=>{
-        /*const fetchUser = async ()=>{
-            const res = await axios.get(`users?username=${username}`);
+        const fetchUser = async ()=>{
+            const res = await axios.get(`/user?username=${username}`);
             setUser(res.data)
         };
-        fetchUser();*/
-   /* },[])*/
+        fetchUser();
+    },[username])
     return(
         <section className="feeds-page">
             <NavBar/>
             <div className="profile">
                 <SideBar />
                 <div className="profile-content">
-                    <ProfileTop />  
+                    <ProfileTop user={user} />  
                     <div className="flex" >
-                        <Feed page="Profile"/>
+                        <Feed page="Profile" username={username}/>
                         <div className="rightBar">
                             <UserInfo user={user}/>
                             <ListFollow nom ="Followers"/>

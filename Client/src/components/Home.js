@@ -15,7 +15,7 @@ function Home(){
             <NavBar/>
             <div className="flexContent">
                 <SideBar />
-                <Feed page="Home" />
+                <Feed page="Home"/>
                 <div className="rightBar">
                     <ListFollow nom="To follow" />
                 </div>

@@ -29,9 +29,16 @@
 .sideBarListItems{
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border-bottom: 0.1rem solid #eee;
-
+    transition: transform 0.5s ease;
+}
+.sideBarListItems :hover{
+    transform: scale(1.1);
+}
+.LinkItems{
+    text-decoration: none;
+    color: black;
 }
 .sideBarIcon{
     margin-right: 2rem;
