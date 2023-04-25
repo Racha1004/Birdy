@@ -15,12 +15,19 @@ const createToken = (id) => {
 module.exports.signUp = async(req, res) => {
    // console.log(req.body);
 
-    const {pseudo, email, password} = req.body;
+    const {username, email, password} = req.body;
+
+    console.log("body,",req.body)
     try {
-        const user = await UserModel.create({pseudo, email, password});
+        console.log("pseudo",username);
+        //const user = await UserModel.create({username, email, password});
+        const user = await UserModel.create({pseudo : username, email : email, password : password});
+        console.log("1");
         res.status(201).json({user : user._id});
+        console.log("user created",user);
     } catch (error) {
         const errors = signUpErrors(error);
+        console.log(errors);
         //res.status(500).json(error);
         res.status(500).send({ errors })
     }
@@ -31,6 +38,7 @@ module.exports.signIn = async(req, res) => {
 
     try {
         const user = await UserModel.login(email, password);
+        console.log("id",user._id);
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge });
         res.status(200).json({user : user._id});
@@ -43,6 +51,8 @@ module.exports.signIn = async(req, res) => {
 module.exports.logout = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 }); // supprimer le cookie jwt en le mettant à une durée de vie nulle
     res.redirect('/'); // rediriger l'utilisateur vers la page d'accueil
-  }
+    console.log("logout");
+    console.log(req.cookies);
+}
   
 //module.exports.signUpErrors = signUpErrors;

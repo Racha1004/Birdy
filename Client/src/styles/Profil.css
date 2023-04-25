@@ -29,6 +29,9 @@ body{
 /* Pour les publications posts et les amis*/
 .flex{
     justify-content: center;
+    margin-left: 2rem;
+    display: flex;
+    justify-content: space-between;
 }
 /*Barre infos + amis*/
 .rightBar{

@@ -1,25 +1,79 @@
+import { useContext, useRef } from "react";
+import "../styles/Form.css";
+import { loginCall } from "../apiCalls";
+import { AuthContext } from "../context/AuthContext";
+import { FadeLoader, Spinner } from "react-spinners"
+import { useHistory } from "react-router";
+//import "react-spinners/FadeLoader.css";
 
 
-import{ useState } from "react";
+export default function Login() {
+  const email = useRef();
+  const password = useRef();
+  const {isFetching, dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
-function Login(props){
-
-    const[login ,setLogin]=useState('');
-    const[password,setPassword] = useState('');
-
-    function getLogin(event){
-        setLogin(event.target.value);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try{
+      await loginCall(
+        { email: email.current.value, password: password.current.value },
+        dispatch
+      );
+      //history.push("/");
+    }catch(err){
+      console.log(err);
     }
-    function getPassword(event){
-        setPassword(event.target.value);
-    }
+  };
+    
+  const handleRegister = () => {
+    history.push("/register");
+  };
 
-    return <form method='POST' action =''>
-        <label htmlFor="login">Login</label><input id='login' type = 'text' onChange={getLogin}/>
-        <label htmlFor="mdp">Mot de passe</label><input id='mdp' type = 'password' onChange={getPassword}/>
-        <button type="submit"> Sign in</button>
-    </form>
+  return (
+    <div className="login">
+      <div className="loginWrapper">
+        <div className="loginLeft">
+          <h3 className="loginLogo">BIRDY</h3>
+          <span className="loginDesc">
+          Ne manquez pas ce qui se passe dans le monde.
+          </span>
+        </div>
+        <div className="loginRight">
+          <form className="loginBox" onSubmit={handleClick}>
+            <input
+              placeholder="Email"
+              type="email"
+              required
+              className="loginInput"
+              ref={email}
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              required
+              minLength="8"
+              className="loginInput"
+              ref={password}
+            />
+            <button className="loginButton" type="submit" disabled={isFetching}>
+              {isFetching ? (
+                <FadeLoader color="#ffffff" loading={isFetching} size={20} />
+              ) : (
+                "Log In"
+              )}
+            </button>
+            <span className="loginForgot">Vous n'avez pas de compte ?</span>
+            <button className="loginRegisterButton" onClick={handleRegister}>
+              {isFetching ? (
+                <FadeLoader color="#ffffff" loading={isFetching} size={20} />
+              ) : (
+                "Create a New Account"
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-
-export default Login;
