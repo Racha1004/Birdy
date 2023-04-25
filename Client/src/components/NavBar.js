@@ -3,10 +3,28 @@ import {FaDove,FaHome,FaHashtag,FaBell,FaEnvelope,FaSearch,FaChevronDown} from "
 import bird from"./Images/bird.png"
 import "../styles/NavBar.css"
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import Logout from "./Logout";
+import axios from "axios";
+import { useHistory } from "react-router";
+
 function NavBar(){
     //const {user} = useContext()
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    //const { user } = useContext(AuthContext);
+    const { user, dispatch } = useContext(AuthContext);
+    const history = useHistory();
 
+    const handleLogout = async (e) => {
+      e.preventDefault();
+      try{
+        await axios.get("/api/user/logout");
+        dispatch({ type: "LOGOUT" });
+        history.push("/register");
+      } catch (err) {
+        console.log(err);
+      }
+    };
     return (
         <nav className="feeds-nav">
             <Link to={`/`} className="logo" >
@@ -33,6 +51,9 @@ function NavBar(){
                     <a href="#" className="user-link">Racha dac</a>
                     <FaChevronDown  className="icon"/>
                 </Link>
+                <button className="logout-button" onClick={handleLogout}> 
+                  Log out
+                </button>
             </div>
         </nav>
     )
@@ -41,12 +62,3 @@ function NavBar(){
 
 export default NavBar;
 
-/*
-    import Login from "./Login"
-    import Logout from "./Logout"
-
-    <nav>
-        { props.isConnect ? <Logout logout = {props.logout} /> :<Login  login = {props.login} /> }
-
-    </nav>
-*/
