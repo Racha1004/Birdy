@@ -9,7 +9,7 @@ function Feed({page}){
     //const {user}= useContext()
     useEffect (()=>{
         const fetchPosts = async ()=>{
-            const res = await axios.get("api/post/feed/all/64374824044ca41f2795a66f");
+            const res = await axios.get("api/post/feed/all/64381cf84bedd92848ccf579");
             setPosts(res.data);
             console.log(posts);
         };
