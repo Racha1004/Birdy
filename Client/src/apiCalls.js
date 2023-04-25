@@ -3,7 +3,7 @@ import axios from "axios";
 export const loginCall = async (userCredential, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
-    const res = await axios.post("/api/user/login", userCredential);
+    const res = await axios.post("/user/login", userCredential);
     console.log(res.data);
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
   } catch (err) {
@@ -15,7 +15,7 @@ export const loginCall = async (userCredential, dispatch) => {
 export const registerCall = async (userCredential, dispatch) => {
   dispatch({ type: "REGISTER_START" });
   try {
-    const res = await axios.post("/api/user/register", userCredential);
+    const res = await axios.post("/user/register", userCredential);
     console.log(res.data);
     dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
   } catch (err) {

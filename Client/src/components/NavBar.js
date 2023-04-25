@@ -18,7 +18,7 @@ function NavBar(){
     const handleLogout = async (e) => {
       e.preventDefault();
       try{
-        await axios.get("/api/user/logout");
+        await axios.get("/user/logout");
         dispatch({ type: "LOGOUT" });
         history.push("/register");
       } catch (err) {
@@ -31,7 +31,7 @@ function NavBar(){
                 <FaDove className="icon"/>
                 <div className="nomSite">Birdy</div>
             </Link>
-            <div className="flex">
+            <div className="content-navBar">
                  <div className="search-bar" id="search">
                     <FaSearch className="icon"/>
                     <input type="test" id="recherche" name="fname" placeholder="Recherche ..."  className="search-bar-input"/>
@@ -43,7 +43,9 @@ function NavBar(){
                     <a href="" ><FaBell/></a>
                     <a href="" ><FaEnvelope/></a>
                 </div>  
-
+                <button className="logout-button" onClick={handleLogout}> 
+                  Log out
+                </button>
                 <Link to={`/profile/jj`} className="user" >
                     <div className="user-img-wrapper">
                         <img src={bird} alt=""/> 
@@ -51,9 +53,6 @@ function NavBar(){
                     <a href="#" className="user-link">Racha dac</a>
                     <FaChevronDown  className="icon"/>
                 </Link>
-                <button className="logout-button" onClick={handleLogout}> 
-                  Log out
-                </button>
             </div>
         </nav>
     )

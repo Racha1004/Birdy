@@ -26,7 +26,7 @@ function App(){
                 <Route path="/register">
                 {user ? <Redirect to="/login" /> : <Register />}
                 </Route>     
-                <Route path="/profil/:username" >
+                <Route path="/profile/:username" >
                     <Profil/>
                 </Route>
             </Switch>

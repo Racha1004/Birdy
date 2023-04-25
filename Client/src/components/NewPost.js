@@ -32,7 +32,7 @@ function NewPost({page}){
                 </div>
                 <textarea type="text" placeholder="What's happening ?" ref={desc}/>
                 <label htmlFor="shareImg" className="icon" >
-                    <FaCamera />
+                    <FaImage />
                     <input style={{display:"none"}}
                             type="file"
                             id="shareImg"
@@ -40,9 +40,8 @@ function NewPost({page}){
                             onChange={(e)=>setFile(e.target.files[0])}
                             />
                 </label>
-                <FaImage className="icon" />
                 <FaChartBar className="icon" />
-                <button type="submit" className="postMessage">tak</button>
+                <button type="submit" className="postMessage">Share</button>
             </form>
         </div>
     );

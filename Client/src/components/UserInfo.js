@@ -6,6 +6,7 @@ import "../styles/UserInfo.css";
 function UserInfo({user}){
     return(
         <div className="rightBarInfo">
+            <button type="submit" className="follow-user_button"> + FOLLOW </button>
             <h4 className="rightBarTitle">User's Infos :</h4>
             <div className="rightBarInfoItem">
                 <span className="rightBarInfoKey">Pseudo :</span>

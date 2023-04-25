@@ -36,3 +36,14 @@
     padding-left: 2rem;
     max-width: 10rem;
 }
+.follow-user_button{
+    background-color: rgb(126, 224, 211) ;
+    padding: 1rem;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 30%;
+    margin-bottom: 2rem;
+}
