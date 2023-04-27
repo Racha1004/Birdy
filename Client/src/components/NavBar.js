@@ -46,11 +46,11 @@ function NavBar(){
                 <button className="logout-button" onClick={handleLogout}> 
                   Log out
                 </button>
-                <Link to={`/profile/jj`} className="user" >
+                <Link to={`/profile/${user.pseudo}`} className="user" >
                     <div className="user-img-wrapper">
-                        <img src={bird} alt=""/> 
+                        <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"} alt=""/> 
                     </div>
-                    <a href="#" className="user-link">Racha dac</a>
+                    <a href="#" className="user-link">{user.pseudo}</a>
                     <FaChevronDown  className="icon"/>
                 </Link>
             </div>

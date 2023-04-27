@@ -1,21 +1,22 @@
 import React, { useState,useEffect, useContext } from "react";
-import {AiOutlineHeart,AiFillHeart} from "react-icons/ai";
+import {AiOutlineHeart,AiFillHeart, AiOutlineCloudServer} from "react-icons/ai";
 import {FaCheckCircle,FaRegComment} from "react-icons/fa";
 import "../styles/Post.css";
 import axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+
 function Post({post}){
     const [like,setLike] = useState(post.likers.length);
     const [isLiked,setIsLiked] = useState(false);
     const [user,setUser] =useState({});
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const currentUser = "64381d234bedd92848ccf57d";
-    //const {user:currentUser} = useContext();
+    const {user:currentUser} = useContext(AuthContext);
 
     useEffect (()=>{
-        setIsLiked(post.likers.includes(currentUser));
-    },[post.likers,currentUser]);
+        setIsLiked(post.likers.includes(currentUser._id));
+    },[post.likers,currentUser._id]);
 
     useEffect (()=>{
         const fetchUser = async ()=>{
@@ -24,16 +25,12 @@ function Post({post}){
         };
         fetchUser();
     },[post.userId]);
-    /*
-    useEffect(()=>{
-        setIsLiked(post.likes.includes(currentUser.userid))
-    })
-    */
+   
+    
     const likeHandeler = ()=>{
         //ajouter ce like a la base de données
         try{
-            axios.patch('/post/'+post._id+'/like',{id :currentUser }); // ici faut modifier car ici c'est la personne qui publi qui aime son post apres il faut pkutotrecuprer le user courant
-       
+            axios.patch('/post/'+post._id+'/like',{id :currentUser._id });
         }catch(error){
             console.log("error");
         }

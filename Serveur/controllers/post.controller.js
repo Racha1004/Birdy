@@ -182,10 +182,54 @@ module.exports.likepost = async (req, res) => {
   try{
       const post = await PostModel.findById(req.params.id);
       if(!post.likers.includes(req.body.id)){
-          await post.updateOne({$push : {likers:req.body.id}});
+          //await post.updateOne({$push : {likers:req.body.id}});
+          if (!ObjectID.isValid(req.params.id))
+            return res.status(400).send("ID unknown : " + req.params.id);
+      
+          const updatedPost = await PostModel.findByIdAndUpdate(
+            req.params.id,
+            {
+              $addToSet: { likers: req.body.id },
+            },
+            { new: true }
+          );
+          const updatedUser = await UserModel.findByIdAndUpdate(
+            req.body.id,
+            {
+              $addToSet: { likes: req.params.id },
+            },
+            { new: true }
+          );
           res.status(200).json("The post has been liked");
       }else{
-          await post.updateOne({$pull : {likers:req.body.id}});
+          //await post.updateOne({$pull : {likers:req.body.id}});
+          if (!ObjectID.isValid(req.params.id)) {
+            return res.status(400).send("Invalid post ID");
+          }
+          if (!ObjectID.isValid(req.body.id)) {
+            return res.status(400).send("Invalid user ID");
+          }
+          const post = await PostModel.findByIdAndUpdate(
+            req.params.id,
+            {
+              $pull: { likers: req.body.id },
+            },
+            { new: true }
+          );
+          if (!post) {
+            return res.status(404).send("Post not found");
+          }
+      
+          const user = await UserModel.findByIdAndUpdate(
+            req.body.id,
+            {
+              $pull: { likes: req.params.id },
+            },
+            { new: true }
+          );
+          if (!user) {
+              return res.status(404).send("User not found");
+          }
           res.status(200).json("The post has been disliked");
       }
   }catch(error){

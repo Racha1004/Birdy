@@ -1,23 +1,25 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect,useState,useContext } from "react";
 import Post from "./Post";
 import NewPost from "./NewPost";
 import "../styles/Feed.css";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+
 function Feed({page, username}){
     const [posts,setPosts] = useState([]);
     //POur chercher les posts dun user
-    //const {user}= useContext()
+    const { user } = useContext(AuthContext);
     useEffect (()=>{
         const fetchPosts = async ()=>{
             const res = username 
                 ? await axios.get("/post/profile/" + username) 
-                : await axios.get("/post/feed/all/64381cf84bedd92848ccf579");
+                : await axios.get("/post/feed/all/"+ user._id);
             setPosts(res.data);
         };
         fetchPosts();
         console.log(posts);
 
-    },[username])
+    },[username, user._id])
     return (
         <div className="feeds-content">
             <NewPost page={page} />

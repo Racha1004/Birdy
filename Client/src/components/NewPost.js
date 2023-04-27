@@ -2,19 +2,30 @@ import React, { useContext,useRef, useState } from "react";
 import {AiOutlineStar} from "react-icons/ai";
 import {CgProfile} from "react-icons/cg";
 
-import bird from"./Images/bird.png";
 import {FaImage,FaCamera,FaChartBar} from "react-icons/fa";
 import "../styles/NewPost.css";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
+
 function NewPost({page}){
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    //const {user}= useContext();
     const desc = useRef();
     const [file,setFile]=useState(null);
+    const {user} = useContext(AuthContext);
 
-    const submitHandeler =(e)=>{
+
+    const submitHandeler = async(e)=>{
         e.preventDefault();
         const newPost = {
-            userId:2
+            posterId:user._id,
+            message: desc.current.value
+        }
+        
+        try{
+            await axios.post("/post/", newPost);
+
+        }catch(error){
+            
         }
     }
     return(
@@ -28,9 +39,9 @@ function NewPost({page}){
 
             <form className="header-post" onSubmit={submitHandeler}>
                 <div className="header-img-wrapper">
-                    <img src={`${PF}bird.png`} alt=""/>
+                    <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"} alt=""/>
                 </div>
-                <textarea type="text" placeholder="What's happening ?" ref={desc}/>
+                <textarea type="text" placeholder={"What's happening "+user.pseudo+" ?"} ref={desc}/>
                 <label htmlFor="shareImg" className="icon" >
                     <FaImage />
                     <input style={{display:"none"}}
