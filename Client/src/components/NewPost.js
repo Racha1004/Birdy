@@ -20,7 +20,20 @@ function NewPost({page}){
             posterId:user._id,
             message: desc.current.value
         }
-        
+        if(file){//On ajoute notre image
+            console.log("OUoiooooooooooooooo");
+            const data = new FormData();
+            const fileName = Date.now()+file.name;
+            data.append("file",file)
+            data.append("name",fileName);
+            newPost.picture = fileName;
+            try{
+                await axios.post("/upload", data);
+            }catch(error){
+                console.log(error);
+            }
+        }
+        // Ensuite on le poste !
         try{
             await axios.post("/post/", newPost);
 
@@ -48,7 +61,7 @@ function NewPost({page}){
                             type="file"
                             id="shareImg"
                             accept=".png,.jpeg,.jpg"
-                            onChange={(e)=>setFile(e.target.files[0])}
+                            onChange={(e)=>{setFile(e.target.files[0])}}
                             />
                 </label>
                 <FaChartBar className="icon" />
