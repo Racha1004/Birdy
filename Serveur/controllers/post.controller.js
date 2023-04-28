@@ -39,6 +39,7 @@ module.exports.createPost = async (req, res) => {
         comments: []
     });
     try {
+        console.log("Server"+newPost.message);
         const post = await newPost.save();
         return res.status(201).json(post);
     } catch (error) {

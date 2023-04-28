@@ -32,8 +32,7 @@ const storage = multer.diskStorage({
     cb(null,"public/Images");
   },
   filename: (req,file,cb)=>{
-    console.log(req.body);
-    cb(null,file.originalname);
+    cb(null,req.body.name);
   },
 });
 const upload = multer({storage});

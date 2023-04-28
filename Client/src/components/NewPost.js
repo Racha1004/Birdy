@@ -21,11 +21,10 @@ function NewPost({page}){
             message: desc.current.value
         }
         if(file){//On ajoute notre image
-            console.log("OUoiooooooooooooooo");
             const data = new FormData();
             const fileName = Date.now()+file.name;
-            data.append("file",file)
             data.append("name",fileName);
+            data.append("file",file);
             newPost.picture = fileName;
             try{
                 await axios.post("/upload", data);
@@ -36,6 +35,7 @@ function NewPost({page}){
         // Ensuite on le poste !
         try{
             await axios.post("/post/", newPost);
+            window.location.reload();
 
         }catch(error){
             
