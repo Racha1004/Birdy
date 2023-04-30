@@ -29,3 +29,14 @@ export const RegisterFailure = (error) => ({
     type: "REGISTER_FAILURE",
     payload: error,
 });
+
+export const Follow = (userId)=>({
+    type  :"FOLLOW",
+    payload : userId,
+});
+
+
+export const UnFollow = (userId)=>({
+    type  :"UNFOLLOW",
+    payload : userId,
+});

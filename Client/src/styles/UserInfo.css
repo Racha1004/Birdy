@@ -9,17 +9,16 @@
       overflow: auto; /* ou overflow: hidden; */
 }
 .rightBarTitle{
-    background-color: rgb(10, 23, 207) ;
+    background-color:rgb(217, 223, 241);
     height: 2rem;
     padding: 2rem;
     border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 2rem;
     border-bottom: solid 0.5px grey;
     text-align: center;
-
+    border-bottom: solid 3px  rgb(41, 88, 241);
 }
 
 .rightBarInfoItem{
@@ -37,7 +36,7 @@
     max-width: 10rem;
 }
 .follow-user_button{
-    background-color: rgb(126, 224, 211) ;
+    background-color: rgb(41, 88, 241); ;
     padding: 1rem;
     border-radius: 30px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -46,4 +45,11 @@
     text-align: center;
     margin-left: 30%;
     margin-bottom: 2rem;
+    color : white;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+
+}
+.follow-user_button:hover{
+    transform: scale(1.1);
 }
