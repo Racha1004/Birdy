@@ -108,3 +108,41 @@ module.exports.unfollow = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
+module.exports.getFollowings = async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id).select('-password');
+        const followings = await Promise.all(
+            user.following.map((friendId)=>{
+                return  UserModel.findById(friendId).select('pseudo',);
+            })
+        );
+        let followingList = [];
+        followings.map((friend)=>{
+            const {_id,pseudo,profilePicture} = friend;
+            followingList.push( {_id,pseudo,profilePicture});
+        });
+        res.status(200).json(followingList);
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}
+module.exports.getFollowers = async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id).select('-password');
+        const followerss = await Promise.all(
+            user.followers.map((friendId)=>{
+                return  UserModel.findById(friendId).select('pseudo',);
+            })
+        );
+        let followersList = [];
+        followerss.map((friend)=>{
+            const {_id,pseudo,profilePicture} = friend;
+            followersList.push( {_id,pseudo,profilePicture});
+        });
+        res.status(200).json(followersList);
+    }catch(error){
+        res.status(500).json(error);
+    }
+}

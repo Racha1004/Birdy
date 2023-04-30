@@ -1,6 +1,6 @@
 import React from "react";
-import bird from"./Images/bird.png"
 import "../styles/Follow.css";
+import {Link} from "react-router-dom";
 
 function Follow({user}){
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -8,11 +8,13 @@ function Follow({user}){
     return (
         <div className="follow-user">
             <div className="follow-user-img">
-                <img src={PF+user.profilePicture}/>
+                <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"}/>
             </div>
             <div className="follow-user-info">
-                <h4>{user.username}</h4>
-                <p>@annasmith</p>
+                <Link to ={`/profile/${user.pseudo}`} className="link_user_pseudo">
+                    <h4>{user.pseudo}</h4>
+                    <p>{user.email}</p>
+                </Link>
             </div>
             <button type="button" className="follow-btn">Suivre</button>
         </div>

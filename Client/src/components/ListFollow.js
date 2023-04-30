@@ -2,21 +2,35 @@ import React, { useState,useEffect } from "react";
 import Follow from "./Follow";
 import {Users} from "../Data/Users.js";
 import "../styles/ListFollow.css";
-function ListFollow({nom}){
+import axios from "axios";
+
+function ListFollow({nom,user}){
     const [friends,setFriends]=useState([]);
     useEffect (()=>{
-        /*const fetchFriends = async ()=>{
-            const res = await axios.get("posts/timeline/idUser")
-            setFriends(res.data)
+        const fetchFriends = async ()=>{
+            try{
+                let friendsList= [];
+                if( nom === "Followings"){
+                    friendsList = await axios.get("/user/followings/"+user._id);
+                }else if( nom === "Followers" ){
+                    friendsList  = await axios.get("/user/followers/"+user._id);
+                }else {
+                    friendsList  = await axios.get("/user/AllUsers");
+                }
+                setFriends(friendsList.data);
+                console.log("rrrr : "+friends.length);
+            }catch(error){
+                console.log(error);
+            } 
         };
-        fetchPosts();*/
-    },[])
+        fetchFriends();
+    },[user._id])
     return (
         <div className="wrapFriend">
             <h3 className="follow-heading"> {nom} </h3>
             <div className="friends">
-                {Users.map((u)=>(
-                    <Follow key={u.id} user={u} />
+                {friends.map((u)=>(
+                    <Follow key={u._id} user={u} />
                 ))}  
             </div>  
 

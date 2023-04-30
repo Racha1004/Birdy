@@ -24,14 +24,14 @@ function Profil(){
         <section className="feeds-page">
             <NavBar/>
             <div className="profile">
-                <SideBar />
+                <SideBar user={user} />
                 <div className="profile-content">
                     <ProfileTop user={user} />  
                     <div className="flex" >
                         <Feed page="Profile" username={username}/>
                         <div className="rightBar">
                             <UserInfo user={user}/>
-                            <ListFollow nom ="Followers"/>
+                            <ListFollow nom ="Followers" user={user} />
                         </div>
                     </div>
                 

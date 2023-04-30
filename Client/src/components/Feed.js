@@ -24,7 +24,7 @@ function Feed({page, username}){
     },[username, user._id])
     return (
         <div className="feeds-content">
-            <NewPost page={page} />
+            {(! username || username === user.pseudo) && <NewPost page={page} /> }
             <div className="posts">
                 
                 {posts.map((p)=>(

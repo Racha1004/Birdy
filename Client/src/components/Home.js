@@ -1,23 +1,23 @@
 
-import React from "react";
+import React, {useContext } from "react";
 import NavBar from "./NavBar";
 import Feed from "./Feed";
 import '../styles/Home.css'
-import {Users} from "../Data/Users.js";
-import Follow from "./Follow";
 import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
+import { AuthContext } from "../context/AuthContext";
 
 function Home(){
+    const { user } = useContext(AuthContext);
 
     return(
         <section className="feeds-page">
             <NavBar/>
             <div className="flexContent">
-                <SideBar />
+                <SideBar user={user}/>
                 <Feed page="Home"/>
                 <div className="rightBar">
-                    <ListFollow nom="To follow" />
+                    <ListFollow nom="To follow" user={user}/>
                 </div>
             </div>
             
