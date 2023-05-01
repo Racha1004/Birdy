@@ -7,27 +7,45 @@ const ObjectID  = require('mongoose').Types.ObjectId;
 // si on a un await dans une fonction, il faut que la fonction soit async
 // Retrieve and return all posts from the database.
 module.exports.getPost = async (req, res) => {
-    try {
-        const posts = await PostModel.find().sort({createdAt: -1}).populate("posterId", "pseudo");
-        res.status(200).json(posts);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+  try {
+      const posts = await PostModel.find().sort({createdAt: -1}).populate("posterId", "pseudo");
+      res.status(200).json(posts);
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
 };
+
 // get  user's all posts 
 module.exports.getAllUsersPosts= async (req, res) => {
-  try{
-    const currentUser = await UserModel.findOne({pseudo : req.params.username});
-    console.log(req.params.username);
-
-    const userPosts = await PostModel.find({posterId : currentUser._id});
-    res.status(200).json(userPosts);
-    console.log(userPosts);
-  }catch(error){
-    res.status(500).json(err);
+try{
+  const currentUser = await UserModel.findOne({pseudo : req.params.username});
+  console.log(req.params.username);
+  if (!currentUser) {
+    return res.status(404).json({ message: "Utilisateur non trouvé" });
   }
 
+  const userPosts = await PostModel.find({posterId : currentUser._id});
+  res.status(200).json(userPosts);
+  console.log(userPosts);
+} catch(error){
+  res.status(500).json(err);
+}
 };
+
+// get search posts  
+module.exports.searchPosts = async (req, res) => {
+  try {
+    const keyword = req.params.search;
+    const posts = await PostModel.find({ message: { $regex: keyword, $options: "i" } })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Create and Save a new Post
 module.exports.createPost = async (req, res) => {
     const newPost = new PostModel({

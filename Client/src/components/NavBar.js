@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState,useEffect } from "react";
 import {FaDove,FaHome,FaHashtag,FaBell,FaEnvelope,FaSearch,FaChevronDown} from "react-icons/fa";
 import bird from"./Images/bird.png"
 import "../styles/NavBar.css"
@@ -14,6 +14,8 @@ function NavBar(){
     //const { user } = useContext(AuthContext);
     const { user, dispatch } = useContext(AuthContext);
     const history = useHistory();
+    const [posts, setPosts] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
 
     const handleLogout = async (e) => {
       e.preventDefault();
@@ -25,6 +27,30 @@ function NavBar(){
         console.log(err);
       }
     };
+  
+  // effect to filter posts based on searchInput
+    useEffect(() => {
+      const fetchPosts = async () => {
+        const response = await axios.get(`http://localhost:8800/api/post/search/${searchInput}`);
+        console.log(response.data)
+        setPosts(response.data);
+      };
+      fetchPosts();
+    }, [searchInput]);
+    
+    useEffect(() => {
+      console.log(searchInput);
+    }, [searchInput]);
+    
+
+  // Mettre à jour la chaîne de recherche à chaque modification de la barre de recherche
+  const handleSearchInputChange = (event) => {
+    console.log(event.target.value)
+    setSearchInput(event.target.value);
+  };
+  
+
+
     return (
         <nav className="feeds-nav">
             <Link to={`/`} className="logo" >
@@ -34,7 +60,7 @@ function NavBar(){
             <div className="content-navBar">
                  <div className="search-bar" id="search">
                     <FaSearch className="icon"/>
-                    <input type="test" id="recherche" name="fname" placeholder="Recherche ..."  className="search-bar-input"/>
+                    <input type="text" id="recherche" name="fname" placeholder="Recherche ..."  className="search-bar-input" value={searchInput} onChange={handleSearchInputChange} />
                     <input  id="contact" type="checkbox" value="checked" name="contact" className="checkBox"/>
                 </div>
                 <div className="icons">

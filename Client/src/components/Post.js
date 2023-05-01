@@ -39,7 +39,8 @@ function Post({post}){
         }
         setLike(isLiked ? like-1 : like+1);
         setIsLiked(!isLiked);
-    }
+    };
+
     return(
         <div className="post">
             <div className="user-avatar">

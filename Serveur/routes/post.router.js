@@ -6,6 +6,7 @@ router.put('/:id', postController.updatePost);
 router.delete('/:id', postController.deletePost);
 
 router.get('/', postController.getPost);
+router.get('/search/:search', postController.searchPosts);
 router.get('/:id', postController.getPostById);
 router.get('/profile/:username', postController.getAllUsersPosts);
 router.patch('/like-post/:id', postController.likePost);
