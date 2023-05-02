@@ -108,3 +108,38 @@ module.exports.unfollow = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
+module.exports.searchUser = async (req, res) => {
+    try {
+      const keyword = req.params.search;
+      const users = await UserModel.find({ pseudo: { $regex: keyword, $options: "i" } }).select('pseudo');
+  
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+};
+  
+  
+
+// Get number of followers for a user
+module.exports.getCountFollowers = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        res.send({count: user.followers.length});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+// Get number of following for a user
+module.exports.getCountFollowings = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        res.send({count: user.following.length});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+}

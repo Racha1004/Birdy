@@ -14,6 +14,13 @@ router.get("/logout", authController.logout);
 router.get("/AllUsers", userController.getAllUsers);
 router.get("/", userController.userInfo);
 
+// search user
+router.get("/search/:search", userController.searchUser);
+
+// users stats
+router.get("/countFollowers/:id", userController.getCountFollowers);
+router.get("/countFollowings/:id", userController.getCountFollowings);
+
 router.put("/:id", userController.updateUser);
 router.delete("/:id", userController.deleteUser);
 router.patch("/follow/:id", userController.follow);

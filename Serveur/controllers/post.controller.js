@@ -34,6 +34,7 @@ try{
 
 // get search posts  
 module.exports.searchPosts = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
   try {
     const keyword = req.params.search;
     const posts = await PostModel.find({ message: { $regex: keyword, $options: "i" } })
@@ -281,3 +282,19 @@ module.exports.deleteCommentPost = async (req, res) => {
 
     
 }
+
+// get CountPost, fonction qui permet de compter le nombre de post d'un utilisateur
+module.exports.getCountPost = async (req, res) => {
+  try {
+    const currentUser = await UserModel.findOne({pseudo: req.params.id});
+    console.log(req.params.id);
+    if (!currentUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    const postCount = await PostModel.countDocuments({posterId: currentUser._id});
+    res.status(200).json(postCount);
+  } catch(error) {
+    res.status(500).json(err);
+  }
+};

@@ -13,6 +13,7 @@ router.patch('/like-post/:id', postController.likePost);
 router.patch('/:id/like', postController.likepost);
 router.patch('/unlike-post/:id', postController.unlikePost);
 router.get("/feed/all/:userId", postController.getTimeLinePosts);
+router.get("/countPost/:userId", postController.getCountPost);
 
 // Comment a post
 router.patch('/comment-post/:id', postController.commentPost);
