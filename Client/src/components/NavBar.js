@@ -7,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import Logout from "./Logout";
 import axios from "axios";
 import { useHistory } from "react-router";
+import Feed from "./Feed";
 
 function NavBar(){
     //const {user} = useContext()
@@ -27,20 +28,18 @@ function NavBar(){
         console.log(err);
       }
     };
-  
   // effect to filter posts based on searchInput
-    useEffect(() => {
-      const fetchPosts = async () => {
-        const response = await axios.get(`http://localhost:8800/api/post/search/${searchInput}`);
+  /*useEffect(() => {
+    const fetchPosts = async () => {
+      if(searchInput !== "") {
+        const response = await axios.get(`/post/search/${searchInput}`);
         console.log(response.data)
         setPosts(response.data);
-      };
-      fetchPosts();
-    }, [searchInput]);
+      }
+    };
+    fetchPosts();
+  }, [searchInput]);*/
     
-    useEffect(() => {
-      console.log(searchInput);
-    }, [searchInput]);
     
 
   // Mettre à jour la chaîne de recherche à chaque modification de la barre de recherche
@@ -51,38 +50,64 @@ function NavBar(){
   
 
 
-    return (
-        <nav className="feeds-nav">
-            <Link to={`/`} className="logo" >
-                <FaDove className="icon"/>
-                <div className="nomSite">Birdy</div>
-            </Link>
-            <div className="content-navBar">
-                 <div className="search-bar" id="search">
-                    <FaSearch className="icon"/>
-                    <input type="text" id="recherche" name="fname" placeholder="Recherche ..."  className="search-bar-input" value={searchInput} onChange={handleSearchInputChange} />
-                    <input  id="contact" type="checkbox" value="checked" name="contact" className="checkBox"/>
-                </div>
-                <div className="icons">
-                    <Link to={`/`} className="active" > <FaHome/></Link>
-                    <a href="" ><FaHashtag/></a>
-                    <a href="" ><FaBell/></a>
-                    <a href="" ><FaEnvelope/></a>
-                </div>  
-                <button className="logout-button" onClick={handleLogout}> 
-                  Log out
-                </button>
-                <Link to={`/profile/jj`} className="user" >
-                    <div className="user-img-wrapper">
-                        <img src={bird} alt=""/> 
-                    </div>
-                    <a href="#" className="user-link">Racha dac</a>
-                    <FaChevronDown  className="icon"/>
-                </Link>
-            </div>
-        </nav>
-    )
-}
+  return (
+    <nav className="feeds-nav">
+      <Link to={`/`} className="logo">
+        <FaDove className="icon" />
+        <div className="nomSite">Birdy</div>
+      </Link>
+      <div className="content-navBar">
+        <div className="search-bar" id="search">
+          <FaSearch className="icon" />
+          <input
+            type="text"
+            id="recherche"
+            name="fname"
+            placeholder="Recherche ..."
+            className="search-bar-input"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+          />
+          <input
+            id="contact"
+            type="checkbox"
+            value="checked"
+            name="contact"
+            className="checkBox"
+          />
+        </div>
+        <div className="icons">
+          <Link to={`/`} className="active">
+            {" "}
+            <FaHome />
+          </Link>
+          <a href="">
+            <FaHashtag />
+          </a>
+          <a href="">
+            <FaBell />
+          </a>
+          <a href="">
+            <FaEnvelope />
+          </a>
+        </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Log out
+        </button>
+        <Link to={`/profile/jj`} className="user">
+          <div className="user-img-wrapper">
+            <img src={bird} alt="" />
+          </div>
+          <a href="#" className="user-link">
+            Racha dac
+          </a>
+          <FaChevronDown className="icon" />
+        </Link>
+      </div>
+      <Feed searchInput={searchInput} /> {/* Ajout du composant Feed */}
+    </nav>
+  );
+}  
 //SI on veut ecrire a l interieur du return div un boutton ayant comme class=roro il faut ecrire className=roro
 
 export default NavBar;
