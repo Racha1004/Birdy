@@ -9,7 +9,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import Feed from "./Feed";
 
-function NavBar(){
+function NavBar(props){
     //const {user} = useContext()
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     //const { user } = useContext(AuthContext);
@@ -46,6 +46,7 @@ function NavBar(){
   const handleSearchInputChange = (event) => {
     console.log(event.target.value)
     setSearchInput(event.target.value);
+    props.setMaChaine(searchInput);
   };
   
 
@@ -104,7 +105,6 @@ function NavBar(){
           <FaChevronDown className="icon" />
         </Link>
       </div>
-      <Feed searchInput={searchInput} /> {/* Ajout du composant Feed */}
     </nav>
   );
 }  

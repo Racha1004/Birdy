@@ -11,7 +11,7 @@ function Feed({ page, username ,searchInput}) {
   
   // POour chercher les posts dun user
   //const {user}= useContext()
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchPosts = async () => {
       const res = username
         ? await axios.get("/post/profile/" + username)
@@ -20,7 +20,7 @@ function Feed({ page, username ,searchInput}) {
       setFilteredPosts(res.data);
     };
     fetchPosts();
-  }, [username]);*/
+  }, [username]);
 
    // effect to filter posts based on searchInput
 useEffect(() => {
