@@ -102,6 +102,36 @@ module.exports.searchPostsFollowingOnly = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+module.exports.searchPostsFollowingOnlyByPseudo = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.pseudo
+    const users = await UserModel.find({ pseudo: { $regex: keyword, $options: "i" } }).select('_id');
+    const userIds = users.map(user => user._id);
+    const post = await PostModel.find({ posterId: { $in: userIds } })
+    .populate("posterId", "pseudo")
+    .sort({ createdAt: -1 });
+
+    const currentUser = await UserModel.findById(req.params.userId);
+    console.log(req.params)
+    const posts =[];
+    const friendPosts = await Promise.all(
+      currentUser.following.map((friendId)=>{
+          return PostModel.find({posterId:friendId,
+            message: { $regex: keyword, $options: "i"} })
+            .populate("posterId", "pseudo")
+            .sort({ createdAt: -1 });
+      })
+  );
+    posts = posts.concat(...friendPosts)
+    const intersection = post.filter(item1 => posts.some(item2 => item1.id === item2.id));
+    console.log(intersection)
+    
+    res.status(200).json(intersection);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 // Create and Save a new Post
 module.exports.createPost = async (req, res) => {
     const newPost = new PostModel({

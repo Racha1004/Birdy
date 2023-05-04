@@ -19,6 +19,7 @@ function NavBar(props){
     const [searchInput, setSearchInput] = useState("");
     const [profile,setProfile] = useState(true);
     const [isChecked, setIsChecked] = useState(false);
+    const [isCheckedPseudo, setIsCheckedPseudo] = useState(false);
 
     const handleLogout = async (e) => {
       e.preventDefault();
@@ -42,6 +43,12 @@ function NavBar(props){
     //const isChecked = event.target.checked;
     setIsChecked(event.target.checked);
     props.setIsChecked(event.target.checked);
+  };
+  const handleCheckBoxChangePseudo = (event) => {
+    console.log(event.target.checked)
+    //const isChecked = event.target.checked;
+    setIsCheckedPseudo(event.target.checked);
+    props.setIsCheckedPseudo(event.target.checked);
   };
 
 
@@ -70,6 +77,14 @@ function NavBar(props){
             name="contact"
             className="checkBox"
             onChange={handleCheckBoxChange}
+          />
+          <input
+            id="contact"
+            type="checkbox"
+            value={isCheckedPseudo}
+            name="contact"
+            className="checkBox2"
+            onChange={handleCheckBoxChangePseudo}
           />
         </div>
         <div className="icons">

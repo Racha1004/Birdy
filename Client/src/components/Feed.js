@@ -6,7 +6,7 @@ import NewPost from "./NewPost";
 import "../styles/Feed.css";
 import axios from "axios";
 
-function Feed({ page, username ,searchInput, isChecked}) {
+function Feed({ page, username ,searchInput, isChecked,isCheckedPseudo}) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   
@@ -28,12 +28,16 @@ function Feed({ page, username ,searchInput, isChecked}) {
 useEffect(() => {
     const fetchPosts = async () => {
       if (searchInput !== "") {
-        username = "david"  // // je l ai mis en statique pour qu ikl soit pas undefined, apres tous les users auront le
-        const res = username && isChecked === true
+        username = "david" // // je l ai mis en statique pour qu il soit pas undefined, apres tous les users auront le leur
+        const res = isChecked === true
         ? await axios.get(`/post/feed/all/search/643fc7a342de0261bebc476f/${searchInput}`) // recherche base sur sur les messages de mes amis
-        : username 
+        : page === "Profile"//username
           ? await axios.get("/post/profile/search/" + `david/${searchInput}`) // recherche base sur sur les messages de mon profil
-          : await axios.get(`/post/search/${searchInput}` ); // recherche base sur sur les messages de tous les utilisateurs  
+        //: isChecked === true && isCheckedPseudo === true 
+        //  ? await axios.get("post/feed/search/643fc7a342de0261bebc476f"+`/${searchInput}`)
+        : isCheckedPseudo === true 
+          ? await axios.get(`/post/feed/search/${searchInput}`)
+          : await axios.get(`/post/search/${searchInput}`); // recherche base sur sur les messages de tous les utilisateurs  
         console.log("res",res.data)
         setFilteredPosts(res.data);
 
@@ -42,11 +46,10 @@ useEffect(() => {
       } else {
         const res = username && isChecked === true
         ? await axios.get("/post/feed/all/643fc7a342de0261bebc476f")
-        : username 
+        : page === "Profile" //username 
           ? await axios.get("/post/profile/" + "david")
-          : await axios.get("/post/timeline/643fc7a342de0261bebc476f");
-        
-        //setPosts(res.data);
+          : await axios.get("/post/");
+
         setFilteredPosts(res.data);
 
       }

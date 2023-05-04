@@ -38,6 +38,7 @@
   .icons {
     display: flex;
     align-items: center;
+    margin-left: 0.5rem;
   }
   
   .icons a {
@@ -71,6 +72,9 @@
   
   .checkBox {
     margin: auto;
+  }
+  .checkBox2 {
+    margin-left: auto;
   }
   
   .search-bar-input:focus {
@@ -136,7 +140,7 @@
     text-decoration: none;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
-    margin-left: 4rem;
+    margin-right: 2rem;
   }
   
   .logout-button:hover {

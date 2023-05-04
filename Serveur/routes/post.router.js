@@ -16,6 +16,7 @@ router.patch('/unlike-post/:id', postController.unlikePost);
 router.get("/feed/all/:userId", postController.getTimeLinePosts);
 router.get("/feed/all/search/:userId/:search", postController.searchPostsFollowingOnly);
 router.get("/feed/search/:pseudo",postController.searchPostsByPseudo);
+router.get("/feed/search/:userId/:pseudo",postController.searchPostsFollowingOnlyByPseudo)
 router.get("/countPost/:userId", postController.getCountPost);
 
 // Comment a post
