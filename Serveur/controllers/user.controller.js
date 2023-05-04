@@ -30,7 +30,8 @@ module.exports.updateUser = async (req, res) => {
             {_id: req.params.id}, //condition to find the user to update 
             {
                 $set: {
-                    bio: req.body.bio
+                    bio: req.body.bio,
+                    pseudo:req.body.pseudo
                 }
             },
             {new: true, upsert: true, setDefaultsOnInsert: true} //options to return the updated user, param a mettre obligatoirement 
@@ -119,9 +120,36 @@ module.exports.searchUser = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
 };
-  
-  
 
+module.exports.incrementProfileViews = async (req, res) => {
+    try {
+        const viewerId = req.body.viewerId;
+        const userId = req.params.id;
+        
+        if (viewerId === userId) {
+            // Ne pas incrémenter le champ si l'utilisateur consulte son propre profil
+            const user = await UserModel.findById(userId);
+            return res.status(200).json(user);
+        }
+        
+        const user = await UserModel.findByIdAndUpdate(
+            userId,
+            { $inc: { profileViews: 1 } },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).send("Utilisateur introuvable");
+        }
+
+        return res.status(200).json(user);
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
+};
+
+  
+ /* 
 // Get number of followers for a user
 module.exports.getCountFollowers = async (req, res) => {
     try {
@@ -142,4 +170,4 @@ module.exports.getCountFollowings = async (req, res) => {
         console.log(err);
         return res.status(500).json({ message: err.message });
     }
-}
+}*/

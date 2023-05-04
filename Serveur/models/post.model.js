@@ -49,8 +49,18 @@ const PostSchema = new mongoose.Schema(
         }
       ],
         required : true
-    }
     },
+    retweeters: {
+        type: [
+          {
+            retweeterId: String,
+            retweeterPseudo: String,
+            retweetDate: Date
+          }
+        ],
+        default: []
+      }
+  },
     {
         timestamps: true
     }
