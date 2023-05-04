@@ -17,6 +17,8 @@ function NavBar(props){
     const history = useHistory();
     const [posts, setPosts] = useState([]);
     const [searchInput, setSearchInput] = useState("");
+    const [profile,setProfile] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
 
     const handleLogout = async (e) => {
       e.preventDefault();
@@ -28,19 +30,6 @@ function NavBar(props){
         console.log(err);
       }
     };
-  // effect to filter posts based on searchInput
-  /*useEffect(() => {
-    const fetchPosts = async () => {
-      if(searchInput !== "") {
-        const response = await axios.get(`/post/search/${searchInput}`);
-        console.log(response.data)
-        setPosts(response.data);
-      }
-    };
-    fetchPosts();
-  }, [searchInput]);*/
-    
-    
 
   // Mettre à jour la chaîne de recherche à chaque modification de la barre de recherche
   const handleSearchInputChange = (event) => {
@@ -48,7 +37,12 @@ function NavBar(props){
     setSearchInput(event.target.value);
     props.setMaChaine(searchInput);
   };
-  
+  const handleCheckBoxChange = (event) => {
+    console.log(event.target.checked)
+    //const isChecked = event.target.checked;
+    setIsChecked(event.target.checked);
+    props.setIsChecked(event.target.checked);
+  };
 
 
   return (
@@ -72,9 +66,10 @@ function NavBar(props){
           <input
             id="contact"
             type="checkbox"
-            value="checked"
+            value={isChecked}
             name="contact"
             className="checkBox"
+            onChange={handleCheckBoxChange}
           />
         </div>
         <div className="icons">
@@ -111,4 +106,5 @@ function NavBar(props){
 //SI on veut ecrire a l interieur du return div un boutton ayant comme class=roro il faut ecrire className=roro
 
 export default NavBar;
+
 

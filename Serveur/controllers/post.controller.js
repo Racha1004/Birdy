@@ -32,6 +32,24 @@ try{
 }
 };
 
+// recherche par pseudo, 
+module.exports.searchPostsByPseudo = async (req, res) => {
+  try {
+    const keyword = req.params.pseudo
+    console.log(keyword)
+    const users = await UserModel.find({ pseudo: { $regex: keyword, $options: "i" } }).select('_id');
+    const userIds = users.map(user => user._id);
+    const posts = await PostModel.find({ posterId: { $in: userIds } })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 // get search posts  
 module.exports.searchPosts = async (req, res) => {
   // fonction qui permet de rechercher un post par mot clé
@@ -46,7 +64,44 @@ module.exports.searchPosts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+//Pour la recherche de post par mot clé dans le profil
+module.exports.searchProfilePosts = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.search;
+    const currentUser = await UserModel.findOne({pseudo : req.params.username});
+    console.log(req.params);
+    const posts = await PostModel.find({ posterId: currentUser._id,
+      message: { $regex: keyword,$options: "i"} })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
 
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.searchPostsFollowingOnly = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.search;
+    const currentUser = await UserModel.findById(req.params.userId);
+    console.log(req.params)
+    const post =[];
+    const friendPosts = await Promise.all(
+      currentUser.following.map((friendId)=>{
+          return PostModel.find({posterId:friendId,
+            message: { $regex: keyword, $options: "i"} })
+            .populate("posterId", "pseudo")
+            .sort({ createdAt: -1 });
+      })
+  );
+    res.status(200).json(post.concat(...friendPosts));
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 // Create and Save a new Post
 module.exports.createPost = async (req, res) => {
     const newPost = new PostModel({

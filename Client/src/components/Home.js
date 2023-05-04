@@ -9,14 +9,14 @@ import ListFollow from "./ListFollow";
 
 function Home(){
   const [maChaine, setMaChaine] = useState("");
+  const [monBooleen, setMonBooleen] = useState(false);
 
   return(
     <section className="feeds-page">
-      <NavBar setMaChaine={setMaChaine} />
-      console.log(setMaChaine)
+      <NavBar setMaChaine={setMaChaine} setIsChecked={monBooleen => setMonBooleen(monBooleen)}  setpage="home" />
       <div className="flexContent">
         <SideBar />
-        <Feed page="Home" searchInput={maChaine} />
+        <Feed page="Home" searchInput={maChaine} isChecked={monBooleen} />
         <div className="rightBar">
           <ListFollow nom="To follow" />
         </div>
