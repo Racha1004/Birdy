@@ -1,21 +1,23 @@
 import React, { useState,useEffect, useContext } from "react";
-import {AiOutlineHeart,AiFillHeart} from "react-icons/ai";
-import {FaCheckCircle,FaRegComment} from "react-icons/fa";
+import {AiOutlineHeart,AiFillHeart, AiOutlineCloudServer} from "react-icons/ai";
+import {FaCheckCircle,FaRemoveFormat} from "react-icons/fa";
+import  {RiDeleteBin6Line} from "react-icons/ri";
 import "../styles/Post.css";
 import axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
-function Post({post}){
+import { AuthContext } from "../context/AuthContext";
+
+function Post({post,posts,setposts}){
     const [like,setLike] = useState(post.likers.length);
     const [isLiked,setIsLiked] = useState(false);
     const [user,setUser] =useState({});
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const currentUser = "64381d234bedd92848ccf57d";
-    //const {user:currentUser} = useContext();
+    const {user:currentUser} = useContext(AuthContext);
 
     useEffect (()=>{
-        setIsLiked(post.likers.includes(currentUser));
-    },[post.likers,currentUser]);
+        setIsLiked(post.likers.includes(currentUser._id));
+    },[post.likers,currentUser._id]);
 
     useEffect (()=>{
         const fetchUser = async ()=>{
@@ -24,22 +26,27 @@ function Post({post}){
         };
         fetchUser();
     },[post.userId]);
-    /*
-    useEffect(()=>{
-        setIsLiked(post.likes.includes(currentUser.userid))
-    })
-    */
+   
+    
     const likeHandeler = ()=>{
         //ajouter ce like a la base de données
         try{
-            axios.patch('/post/'+post._id+'/like',{id :currentUser }); // ici faut modifier car ici c'est la personne qui publi qui aime son post apres il faut pkutotrecuprer le user courant
-       
+            axios.patch('/post/'+post._id+'/like',{id :currentUser._id });
         }catch(error){
             console.log("error");
         }
         setLike(isLiked ? like-1 : like+1);
         setIsLiked(!isLiked);
-    };
+    }
+    const deleteHandeler = ()=>{
+        try{
+            axios.delete('/post/'+post._id);
+            const updatedMessages = posts.filter(m => m._id !== post._id);
+            setposts(updatedMessages);
+        }catch(error){
+            console.log("error");
+        }
+    }
 
     return(
         <div className="post">
@@ -50,16 +57,19 @@ function Post({post}){
             </div>
             <div className="post-content">
                 <div className="post-user-info">
+                <Link to ={`/profile/${user.pseudo}`} className="link-user-avatar" >
                     <h4>{user.pseudo}</h4>
+                </Link>
+
                     <FaCheckCircle className="icon"/>
-                    <span> @hahaha . {format(post.createdAt)}</span>
+                    <span> {user?.email} . {format(post.createdAt)}</span>
                 </div> 
                 <p className="post-text">
                    {post?.message}
                 </p>
                 <img  className="post-img" src={PF+post.picture} alt="" />
                 <div className="post-icons">
-                    <div className="icon"  ><FaRegComment /> {post.comment}</div>
+                    { user._id === currentUser._id && <div className="icon"  onClick={deleteHandeler}  ><RiDeleteBin6Line />Supprimer</div>}
                     <div className="icon" onClick={likeHandeler} >{isLiked?<AiFillHeart  />:<AiOutlineHeart />}{like}</div>
                 </div>
             </div>

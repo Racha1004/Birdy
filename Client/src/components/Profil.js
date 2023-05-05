@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
 import axios from "axios";
+import Footer from "./Footer";
 function Profil(){
 
     const [user,setUser] =useState({});
@@ -26,20 +27,21 @@ function Profil(){
         <section className="feeds-page">
             <NavBar setMaChaine={setMaChaine} page="profile"/>
             <div className="profile">
-                <SideBar />
+                <SideBar user={user} />
                 <div className="profile-content">
                     <ProfileTop user={user} />  
                     <div className="flex" >
                         <Feed page="Profile"searchInput={maChaine} username={username}/>
                         <div className="rightBar">
                             <UserInfo user={user}/>
-                            <ListFollow nom ="Followers"/>
+                            <ListFollow nom ="Followers" user={user} />
                         </div>
                     </div>
                 
                 </div>
             </div>
-            <footer className="RACYA" >HETE</footer>
+            
+            <Footer />
         </section>
     );
 }

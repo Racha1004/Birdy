@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const {isFetching, dispatch } = useContext(AuthContext);
+  const {user,isFetching,error, dispatch } = useContext(AuthContext);
   const history = useHistory();
 
   const handleClick = async (e) => {
@@ -25,7 +25,7 @@ export default function Login() {
       console.log(err);
     }
   };
-    
+  console.log(user);
   const handleRegister = () => {
     history.push("/register");
   };

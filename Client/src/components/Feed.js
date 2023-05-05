@@ -1,16 +1,19 @@
+import React, { useEffect,useState,useContext } from "react";
 
-import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import NewPost from "./NewPost";
 
 import "../styles/Feed.css";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 
 function Feed({ page, username ,searchInput, isChecked,isCheckedPseudo}) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  
-   // effect to filter posts based on searchInput
+  //POur chercher les posts dun user
+  const { user } = useContext(AuthContext);
+   
+  // effect to filter posts based on searchInput
 useEffect(() => {
     const fetchPosts = async () => {
       if (searchInput !== "") {
@@ -25,32 +28,35 @@ useEffect(() => {
           ? await axios.get(`/post/feed/search/${searchInput}`)
           : await axios.get(`/post/search/${searchInput}`); // recherche base sur sur les messages de tous les utilisateurs  
         console.log("res",res.data)
-        setFilteredPosts(res.data);
+        setFilteredPosts(res.data.sort((p1,p2)=>{
+           return new Date(p2.createdAt) - new Date(p1.createdAt);
+        }));
         
       } else {
         const res = username && isChecked === true
-        ? await axios.get("/post/feed/all/643fc7a342de0261bebc476f")
+        ? await axios.get("/post/feed/all/"+ user._id)
         : isCheckedPseudo === true
           ? await axios.get("/post/")
         : page === "Profile" 
-          ? await axios.get("/post/profile/" + "david")
+          ? await axios.get("/post/profile/" + username)
           : await axios.get("/post/");
-
-        setFilteredPosts(res.data);
+        setFilteredPosts(res.data.sort((p1,p2)=>{
+           return new Date(p2.createdAt) - new Date(p1.createdAt);
+        }));
 
       }
     };
     fetchPosts();
-  }, [searchInput,isChecked,isCheckedPseudo]);
+  }, [searchInput,isChecked,isCheckedPseudo,username, user._id]);
   
 
   return (
     <div className="feeds-content">
-      <NewPost page={page} />
+      {(! username || username === user.pseudo) && <NewPost page={page} /> }
       <div className="posts">
         {filteredPosts.map((p) => (
           console.log(p),
-          <Post key={p._id} post={p} />
+          <Post key={p._id} post={p} posts = {posts} setposts={setPosts} />
         ))}
       </div>
     </div>

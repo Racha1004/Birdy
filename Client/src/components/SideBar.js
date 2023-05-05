@@ -6,7 +6,7 @@ import {CgProfile} from "react-icons/cg";
 import ListFollow from "./ListFollow";
 import { Link } from "react-router-dom";
 
-function SideBar(){
+function SideBar({user}){
 
     return(
         <div className="sideBar">
@@ -64,7 +64,7 @@ function SideBar(){
                 </ul>
                 <div className="Stat" >Les stat sont :        10  ,,  100</div>
             </div>
-            <ListFollow nom = "Following"/>
+            <ListFollow nom ="Followings" user={user}/>
 
         </div>
     );

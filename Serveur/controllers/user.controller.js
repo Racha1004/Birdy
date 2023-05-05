@@ -21,19 +21,23 @@ module.exports.userInfo = async (req, res) => {
 }
 
 module.exports.updateUser = async (req, res) => {
-    console.log(req.params.id);
     if(!ObjectId.isValid(req.params.id))
         return res.status(400).send('ID inconnu : ' + req.params.id)
 
     try {
+        const update ={};
+        if(req.body.profilePicture !== "" ){
+            update.profilePicture =req.body.profilePicture;
+        }
+        if(req.body.coverPicture !== "" ){
+            update.coverPicture =req.body.coverPicture;
+        }
+        if(req.body.bio !== "" ){
+            update.bio =req.body.bio;
+        }
         const updatedUser = await UserModel.findOneAndUpdate(
-            {_id: req.params.id}, //condition to find the user to update 
-            {
-                $set: {
-                    bio: req.body.bio,
-                    pseudo:req.body.pseudo
-                }
-            },
+            {_id: req.params.id },
+            update,
             {new: true, upsert: true, setDefaultsOnInsert: true} //options to return the updated user, param a mettre obligatoirement 
         );
         res.send(updatedUser);
@@ -110,6 +114,45 @@ module.exports.unfollow = async (req, res) => {
     }
 };
 
+module.exports.getFollowings = async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id).select('-password');
+        const followings = await Promise.all(
+            user.following.map((friendId)=>{
+                return  UserModel.findById(friendId).select('-password');
+            })
+        );
+        let followingList = [];
+        followings.map((friend)=>{
+            const {_id,pseudo,profilePicture} = friend;
+            followingList.push( {_id,pseudo,profilePicture});
+        });
+
+        res.status(200).json(followingList);
+
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}
+module.exports.getFollowers = async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.params.id).select('-password');
+        const followerss = await Promise.all(
+            user.followers.map((friendId)=>{
+                return  UserModel.findById(friendId).select('-password');
+            })
+        );
+        let followersList = [];
+        followerss.map((friend)=>{
+            const {_id,pseudo,profilePicture} = friend;
+            followersList.push( {_id,pseudo,profilePicture});
+        });
+        res.status(200).json(followersList);
+    }catch(error){
+        res.status(500).json(error);
+    }
+}
 module.exports.searchUser = async (req, res) => {
     try {
       const keyword = req.params.search;
@@ -149,25 +192,3 @@ module.exports.incrementProfileViews = async (req, res) => {
 };
 
   
- /* 
-// Get number of followers for a user
-module.exports.getCountFollowers = async (req, res) => {
-    try {
-        const user = await UserModel.findById(req.params.id);
-        res.send({count: user.followers.length});
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: err.message });
-    }
-}
-
-// Get number of following for a user
-module.exports.getCountFollowings = async (req, res) => {
-    try {
-        const user = await UserModel.findById(req.params.id);
-        res.send({count: user.following.length});
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: err.message });
-    }
-}*/

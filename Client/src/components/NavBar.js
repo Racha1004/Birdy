@@ -46,8 +46,6 @@ function NavBar(props){
     setIsCheckedPseudo(event.target.checked);
     props.setIsCheckedPseudo(event.target.checked);
   };
-
-
   return (
     <nav className="feeds-nav">
       <Link to={`/`} className="logo">
@@ -101,15 +99,13 @@ function NavBar(props){
         <button className="logout-button" onClick={handleLogout}>
           Log out
         </button>
-        <Link to={`/profile/jj`} className="user">
-          <div className="user-img-wrapper">
-            <img src={bird} alt="" />
-          </div>
-          <a href="#" className="user-link">
-            Racha dac
-          </a>
-          <FaChevronDown className="icon" />
-        </Link>
+       <Link to={`/profile/${user.pseudo}`} className="user" >
+              <div className="user-img-wrapper">
+                    <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"} alt=""/> 
+              </div>
+              <a href="#" className="user-link">{user.pseudo}</a>
+                 <FaChevronDown  className="icon"/>
+       </Link>
       </div>
     </nav>
   );
