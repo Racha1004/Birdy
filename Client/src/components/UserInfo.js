@@ -51,6 +51,10 @@ function UserInfo({user}){
                 <span className="rightBarInfoKey">Activité :</span>
                 <span className="rightBarInfoValue">{user.likes ?user.likes.length : "0"}</span>
             </div> 
+            <div className="rightBarInfoItem">
+                <span className="rightBarInfoKey">Nombre de vues :</span>
+                <span className="rightBarInfoValue">{user?.profileViews}</span>
+            </div>
         </div>
     )
 

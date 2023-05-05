@@ -52,14 +52,6 @@ function SideBar({user}){
                         </Link>
 
                     </li>
-                    <li className= "sideBarListItems">
-                        <Link to={`/profile/User1`}  className="LinkItems" > 
-
-                        <CgProfile className="sideBarIcon"/>
-                        <span className="sideBarItemText">Profil</span>
-                        </Link>
-
-                    </li>
                     
                 </ul>
                 <div className="Stat" >Les stat sont :        10  ,,  100</div>

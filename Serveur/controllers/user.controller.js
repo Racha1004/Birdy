@@ -163,7 +163,7 @@ module.exports.searchUser = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
 };
-
+/*
 module.exports.incrementProfileViews = async (req, res) => {
     try {
         const viewerId = req.body.viewerId;
@@ -190,5 +190,38 @@ module.exports.incrementProfileViews = async (req, res) => {
         return res.status(400).send(err.message);
     }
 };
+*/
+module.exports.incrementProfileViews = async (req, res) => {
 
+    if(!ObjectId.isValid(req.params.id))
+        return res.status(400).send('ID inconnu : ' + req.params.id)
+
+    try {
+        const update ={
+            profileViews : req.body.profileViews
+        };
+        
+        const updatedUser = await UserModel.findOneAndUpdate(
+            {_id: req.params.id },
+            update,
+            {new: true, upsert: true, setDefaultsOnInsert: true} //options to return the updated user, param a mettre obligatoirement 
+        );
+        res.send(updatedUser);
+    } catch(err) {
+        console.log('ID inconnu : ' + err);
+        return res.status(500).json({message : err});
+    }
+}
+module.exports.getNbrViews = async (req, res) => {
+    try {
+      const currentUser = await UserModel.findOne({pseudo: req.params.id});
+      console.log(req.params.id);
+      if (!currentUser) {
+        return res.status(404).json({ message: "Utilisateur non trouvé" });
+      }
+      res.status(200).json(currentUser.profileViews);
+    } catch(error) {
+      res.status(500).json(err);
+    }
+  };
   

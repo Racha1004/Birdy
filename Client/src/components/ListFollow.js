@@ -8,16 +8,18 @@ function ListFollow({nom,user}){
     useEffect (()=>{
         const fetchFriends = async ()=>{
             try{
-                let friendsList= [];
-                if( nom === "Followings"){
-                    friendsList = await axios.get("/user/followings/"+user._id);
-                }else if( nom === "Followers" ){
-                    friendsList  = await axios.get("/user/followers/"+user._id);
-                }else {
-                    friendsList  = await axios.get("/user/AllUsers");
-                    friendsList.data = friendsList.data.filter(utilisateur => !user.following.includes(utilisateur._id) && utilisateur._id != user._id);
-                }
+                if(user._id != null){
+                    let friendsList= [];
+                    if( nom === "Followings"){
+                        friendsList = await axios.get("/user/followings/"+user._id);
+                    }else if( nom === "Followers" ){
+                        friendsList  = await axios.get("/user/followers/"+user._id);
+                    }else {
+                        friendsList  = await axios.get("/user/AllUsers");
+                        friendsList.data = friendsList.data.filter(utilisateur => !user.following.includes(utilisateur._id) && utilisateur._id != user._id);
+                    }
                 setFriends(friendsList.data);
+                }
             }catch(error){
                 console.log(error);
             } 

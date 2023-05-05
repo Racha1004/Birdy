@@ -1,5 +1,5 @@
 
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import NavBar from "./NavBar";
 import Feed from "./Feed";
 import '../styles/Profil.css'
@@ -10,19 +10,33 @@ import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
 import axios from "axios";
 import Footer from "./Footer";
+import { AuthContext } from "../context/AuthContext";
+
 function Profil(){
 
     const [user,setUser] =useState({});
     const username = useParams().username;
     const [maChaine, setMaChaine] = useState("");
+    const [count, setCount] = useState(0);
+    const {user:currentUser} = useContext(AuthContext);
 
     useEffect (()=>{
         const fetchUser = async ()=>{
             const res = await axios.get(`/user?username=${username}`);
+            const newInfos = {
+                profileViews : (res.data.profileViews+1)
+            };
+            console.log(res.data);
+            if(currentUser._id !== res.data._id) {
+                await axios.put("/user/profileViews/"+res.data._id, newInfos);
+            }
             setUser(res.data)
+
         };
         fetchUser();
+       
     },[username])
+
     return(
         <section className="feeds-page">
             <NavBar setMaChaine={setMaChaine} page="profile"/>

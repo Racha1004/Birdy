@@ -8,7 +8,6 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 function Feed({ page, username ,searchInput, isChecked,isCheckedPseudo}) {
-  const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   //POur chercher les posts dun user
   const { user } = useContext(AuthContext);
@@ -56,7 +55,7 @@ useEffect(() => {
       <div className="posts">
         {filteredPosts.map((p) => (
           console.log(p),
-          <Post key={p._id} post={p} posts = {posts} setposts={setPosts} />
+          <Post key={p._id} post={p} posts={filteredPosts} setposts={setFilteredPosts} />
         ))}
       </div>
     </div>
