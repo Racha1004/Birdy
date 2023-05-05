@@ -14,6 +14,8 @@ function Profil(){
 
     const [user,setUser] =useState({});
     const username = useParams().username;
+    const [maChaine, setMaChaine] = useState("");
+
     useEffect (()=>{
         const fetchUser = async ()=>{
             const res = await axios.get(`/user?username=${username}`);
@@ -23,13 +25,13 @@ function Profil(){
     },[username])
     return(
         <section className="feeds-page">
-            <NavBar />
+            <NavBar setMaChaine={setMaChaine} page="profile"/>
             <div className="profile">
                 <SideBar user={user} />
                 <div className="profile-content">
                     <ProfileTop user={user} />  
                     <div className="flex" >
-                        <Feed page="Profile" username={username}/>
+                        <Feed page="Profile"searchInput={maChaine} username={username}/>
                         <div className="rightBar">
                             <UserInfo user={user}/>
                             <ListFollow nom ="Followers" user={user} />

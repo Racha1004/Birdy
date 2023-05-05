@@ -48,7 +48,16 @@ const userSchema = new mongoose.Schema(
     likes: {
       type: Array,
       default : []
-    }
+    },
+    retweet: {
+      type: Array,
+      default: []
+    },
+    profileViews: {
+      type: Number,
+      default: 0
+    },
+    
   },
   {
     timestamps: true

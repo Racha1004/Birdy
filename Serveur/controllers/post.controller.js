@@ -7,26 +7,130 @@ const ObjectID  = require('mongoose').Types.ObjectId;
 // si on a un await dans une fonction, il faut que la fonction soit async
 // Retrieve and return all posts from the database.
 module.exports.getPost = async (req, res) => {
-    try {
-        const posts = await PostModel.find().sort({createdAt: -1}).populate("posterId", "pseudo");
-        res.status(200).json(posts);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+  try {
+      const posts = await PostModel.find().sort({createdAt: -1}).populate("posterId", "pseudo");
+      res.status(200).json(posts);
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
 };
+
 // get  user's all posts 
 module.exports.getAllUsersPosts= async (req, res) => {
-  try{
-    const currentUser = await UserModel.findOne({pseudo : req.params.username});
-    console.log(req.params.username);
-
-    const userPosts = await PostModel.find({posterId : currentUser._id});
-    res.status(200).json(userPosts);
-    console.log(userPosts);
-  }catch(error){
-    res.status(500).json(err);
+try{
+  const currentUser = await UserModel.findOne({pseudo : req.params.username});
+  console.log(req.params.username);
+  if (!currentUser) {
+    return res.status(404).json({ message: "Utilisateur non trouvé" });
   }
 
+  const userPosts = await PostModel.find({posterId : currentUser._id});
+  res.status(200).json(userPosts);
+  console.log(userPosts);
+} catch(error){
+  res.status(500).json(err);
+}
+};
+
+// recherche par pseudo, 
+module.exports.searchPostsByPseudo = async (req, res) => {
+  try {
+    const keyword = req.params.pseudo
+    console.log(keyword)
+    const users = await UserModel.find({ pseudo: { $regex: keyword, $options: "i" } }).select('_id');
+    const userIds = users.map(user => user._id);
+    const posts = await PostModel.find({ posterId: { $in: userIds } })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+// get search posts  
+module.exports.searchPosts = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.search;
+    const posts = await PostModel.find({ message: { $regex: keyword, $options: "i" } })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+//Pour la recherche de post par mot clé dans le profil
+module.exports.searchProfilePosts = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.search;
+    const currentUser = await UserModel.findOne({pseudo : req.params.username});
+    console.log(req.params);
+    const posts = await PostModel.find({ posterId: currentUser._id,
+      message: { $regex: keyword,$options: "i"} })
+      .populate("posterId", "pseudo")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.searchPostsFollowingOnly = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.search;
+    const currentUser = await UserModel.findById(req.params.userId);
+    console.log(req.params)
+    const post =[];
+    const friendPosts = await Promise.all(
+      currentUser.following.map((friendId)=>{
+          return PostModel.find({posterId:friendId,
+            message: { $regex: keyword, $options: "i"} })
+            .populate("posterId", "pseudo")
+            .sort({ createdAt: -1 });
+      })
+  );
+    res.status(200).json(post.concat(...friendPosts));
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+module.exports.searchPostsFollowingOnlyByPseudo = async (req, res) => {
+  // fonction qui permet de rechercher un post par mot clé
+  try {
+    const keyword = req.params.pseudo
+    const users = await UserModel.find({ pseudo: { $regex: keyword, $options: "i" } }).select('_id');
+    const userIds = users.map(user => user._id);
+    const post = await PostModel.find({ posterId: { $in: userIds } })
+    .populate("posterId", "pseudo")
+    .sort({ createdAt: -1 });
+
+    const currentUser = await UserModel.findById(req.params.userId);
+    console.log(req.params)
+    const posts =[];
+    const friendPosts = await Promise.all(
+      currentUser.following.map((friendId)=>{
+          return PostModel.find({posterId:friendId,
+            message: { $regex: keyword, $options: "i"} })
+            .populate("posterId", "pseudo")
+            .sort({ createdAt: -1 });
+      })
+  );
+    posts = posts.concat(...friendPosts)
+    const intersection = post.filter(item1 => posts.some(item2 => item1.id === item2.id));
+    console.log(intersection)
+    
+    res.status(200).json(intersection);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 // Create and Save a new Post
 module.exports.createPost = async (req, res) => {
@@ -308,3 +412,88 @@ module.exports.deleteCommentPost = async (req, res) => {
 
     
 }
+
+// get CountPost, fonction qui permet de compter le nombre de post d'un utilisateur
+module.exports.getCountPost = async (req, res) => {
+  try {
+    const currentUser = await UserModel.findOne({pseudo: req.params.id});
+    console.log(req.params.id);
+    if (!currentUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    const postCount = await PostModel.countDocuments({posterId: currentUser._id});
+    res.status(200).json(postCount);
+  } catch(error) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports.retweet = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { userId } = req.body;
+    console.log("p", postId);
+    console.log("u", userId);
+
+    if (!ObjectID.isValid(req.params.id)) {
+      return res.status(400).send("Invalid post ID");
+    }
+
+    if (!ObjectID.isValid(userId)) {
+      return res.status(400).send("Invalid user ID");
+    }
+
+    console.log("test");
+
+    const post = await PostModel.findByIdAndUpdate(
+      req.params.id,
+      console.log("test00"),
+      {
+        $push: {
+          retweeters: {
+            retweeterId: req.body,
+            retweeterPseudo: req.body.pseudo,
+            retweetDate: new Date().getTime(),
+          },
+        },
+      },
+      { new: true }
+    );
+    console.log("test1");
+    const isRetweeted = post.retweeters.retweeterId === userId;
+    console.log("is", isRetweeted);
+
+    if (isRetweeted) {
+      return res
+        .status(409)
+        .json({ message: "Le post a déjà été retweeté par cet utilisateur" });
+    }
+
+    console.log("test2", post);
+
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
+    const user = await UserModel.findByIdAndUpdate(
+      req.body.userId,
+      {
+        $push: { retweet: req.params.id },
+      },
+      { new: true }
+    );
+
+    console.log("test3", user);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    console.log("Not aimé");
+
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+};

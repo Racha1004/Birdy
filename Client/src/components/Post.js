@@ -47,6 +47,7 @@ function Post({post,posts,setposts}){
             console.log("error");
         }
     }
+
     return(
         <div className="post">
             <div className="user-avatar">
