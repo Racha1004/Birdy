@@ -14,7 +14,7 @@ function Home(){
 
   return(
     <section className="feeds-page">
-      <NavBar setMaChaine={setMaChaine} setIsChecked={monBooleen => setMonBooleen(monBooleen)} setIsCheckedPseudo={monBooleen2 =>setMonBooleen2(monBooleen2)} setpage="home" />
+      <NavBar setMaChaine={setMaChaine} setIsChecked={monBooleen => setMonBooleen(monBooleen)} setIsCheckedPseudo={monBooleen2 =>setMonBooleen2(monBooleen2)} page="home" />
       <div className="flexContent">
         <SideBar />
         <Feed page="Home" searchInput={maChaine} isChecked={monBooleen} isCheckedPseudo={monBooleen2}/>
