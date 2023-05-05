@@ -39,14 +39,10 @@ function NavBar(props){
     props.setMaChaine(searchInput);
   };
   const handleCheckBoxChange = (event) => {
-    console.log(event.target.checked)
-    //const isChecked = event.target.checked;
     setIsChecked(event.target.checked);
     props.setIsChecked(event.target.checked);
   };
   const handleCheckBoxChangePseudo = (event) => {
-    console.log(event.target.checked)
-    //const isChecked = event.target.checked;
     setIsCheckedPseudo(event.target.checked);
     props.setIsCheckedPseudo(event.target.checked);
   };
@@ -70,22 +66,22 @@ function NavBar(props){
             value={searchInput}
             onChange={handleSearchInputChange}
           />
-          <input
+          { props.page === "home" && <input
             id="contact"
             type="checkbox"
             value={isChecked}
             name="contact"
             className="checkBox"
             onChange={handleCheckBoxChange}
-          />
-          <input
+          /> }
+         { props.page === "home" && <input
             id="contact"
             type="checkbox"
             value={isCheckedPseudo}
             name="contact"
             className="checkBox2"
             onChange={handleCheckBoxChangePseudo}
-          />
+          /> }
         </div>
         <div className="icons">
           <Link to={`/`} className="active">

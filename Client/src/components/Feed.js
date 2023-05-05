@@ -10,20 +10,6 @@ function Feed({ page, username ,searchInput, isChecked,isCheckedPseudo}) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   
-  
-  // POour chercher les posts dun user
-  //const {user}= useContext()
-  /*useEffect(() => {
-    const fetchPosts = async () => {
-      const res = username
-        ? await axios.get("/post/profile/" + username)
-        : await axios.get("/post/feed/all/643fc7a342de0261bebc476f");
-      setPosts(res.data);
-      setFilteredPosts(res.data);
-    };
-    fetchPosts();
-  }, [username]);*/
-
    // effect to filter posts based on searchInput
 useEffect(() => {
     const fetchPosts = async () => {
@@ -40,13 +26,13 @@ useEffect(() => {
           : await axios.get(`/post/search/${searchInput}`); // recherche base sur sur les messages de tous les utilisateurs  
         console.log("res",res.data)
         setFilteredPosts(res.data);
-
-        //setPosts(res.data);
-        //setFilteredPosts(postResponse.data);
+        
       } else {
         const res = username && isChecked === true
         ? await axios.get("/post/feed/all/643fc7a342de0261bebc476f")
-        : page === "Profile" //username 
+        : isCheckedPseudo === true
+          ? await axios.get("/post/")
+        : page === "Profile" 
           ? await axios.get("/post/profile/" + "david")
           : await axios.get("/post/");
 
@@ -55,7 +41,7 @@ useEffect(() => {
       }
     };
     fetchPosts();
-  }, [searchInput,isChecked]);
+  }, [searchInput,isChecked,isCheckedPseudo]);
   
 
   return (

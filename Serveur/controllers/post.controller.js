@@ -384,38 +384,6 @@ module.exports.getCountPost = async (req, res) => {
   }
 };
 
-/*module.exports.retweet1 = async (req, res) => {
-  try {
-    
-    const  postId  = req.params.id;
-    const  { userId } = req.body;
-    console.log("p",postId)
-    console.log("u",userId)
-
-    const post = await PostModel.findById(postId);
-    if (!post) {
-      return res.status(404).json({ message: "Le post n'existe pas" });
-    }
-
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "L'utilisateur n'existe pas" });
-    }
-
-    const isRetweeted = post.retweets.includes(userId);
-    if (isRetweeted) {
-      return res.status(409).json({ message: "Le post a déjà été retweeté par cet utilisateur" });
-    }
-
-    post.retweets.push(userId);
-    await post.save();
-
-    res.status(200).json({ message: "Le post a été retweeté avec succès" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};*/
-
 module.exports.retweet = async (req, res) => {
   try {
     const postId = req.params.id;
