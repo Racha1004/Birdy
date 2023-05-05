@@ -464,7 +464,7 @@ module.exports.retweet = async (req, res) => {
     }
 
     const user = await UserModel.findByIdAndUpdate(
-      req.body.id,
+      req.body.userId,
       {
         $push: { retweet: req.params.id },
       },
