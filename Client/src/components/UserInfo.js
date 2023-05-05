@@ -11,20 +11,14 @@ function UserInfo({user}){
     const [followed, setFollowed] = useState( currentUser.following.includes(user._id));
     useEffect (()=>{
         setFollowed( currentUser.following.includes(user._id));
-    },[currentUser, user]);
+    },[currentUser, user,followed]);
+
     const followHandeler = async()=>{
         try{
-            /*router.patch("/follow/:id", userController.follow);
-                router.patch("/unfollow/:id", userController.unfollow); */
-            console.log("him:  -"+ user._id+"-");
-            console.log("me:  -"+ currentUser._id+"-"+currentUser.following.includes(user._id));
-            console.log(currentUser);
             if(followed){
-                console.log("unfolow");
                 await axios.patch("/user/unfollow/"+currentUser._id,{idToUnFollow :user._id });
                 dispatch({type:"UNFOLLOW",payload : user._id});
             }else{
-                console.log("follow");
                 await axios.patch("/user/follow/"+currentUser._id,{idToFollow :user._id });
                 dispatch({type:"FOLLOW",payload : user._id});
 

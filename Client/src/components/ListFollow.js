@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from "react";
 import Follow from "./Follow";
-import {Users} from "../Data/Users.js";
 import "../styles/ListFollow.css";
 import axios from "axios";
 
@@ -16,9 +15,9 @@ function ListFollow({nom,user}){
                     friendsList  = await axios.get("/user/followers/"+user._id);
                 }else {
                     friendsList  = await axios.get("/user/AllUsers");
+                    friendsList.data = friendsList.data.filter(utilisateur => !user.following.includes(utilisateur._id) && utilisateur._id != user._id);
                 }
                 setFriends(friendsList.data);
-                console.log("rrrr : "+friends.length);
             }catch(error){
                 console.log(error);
             } 
@@ -29,7 +28,8 @@ function ListFollow({nom,user}){
         <div className="wrapFriend">
             <h3 className="follow-heading"> {nom} </h3>
             <div className="friends">
-                {friends.map((u)=>(
+                {
+                friends.map((u)=>(
                     <Follow key={u._id} user={u} />
                 ))}  
             </div>  

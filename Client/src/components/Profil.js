@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
 import axios from "axios";
+import Footer from "./Footer";
 function Profil(){
 
     const [user,setUser] =useState({});
@@ -22,7 +23,7 @@ function Profil(){
     },[username])
     return(
         <section className="feeds-page">
-            <NavBar/>
+            <NavBar />
             <div className="profile">
                 <SideBar user={user} />
                 <div className="profile-content">
@@ -37,7 +38,8 @@ function Profil(){
                 
                 </div>
             </div>
-            <footer className="RACYA" >HETE</footer>
+            
+            <Footer />
         </section>
     );
 }

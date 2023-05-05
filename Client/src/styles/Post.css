@@ -15,6 +15,10 @@
     object-fit: cover;
     border-radius: 50%;
 }
+.link-user-avatar{
+    text-decoration: none;
+    color: black;
+}
 .post-user-info{
     display: flex;
     align-items: center;
@@ -47,6 +51,8 @@
 .post-icons{
     margin-top: 1rem;
     display: flex;
+    cursor: pointer;
+
 }
 .post-icons .icon{
     font-size: 2rem;

@@ -28,7 +28,7 @@ function Feed({page, username}){
             <div className="posts">
                 
                 {posts.map((p)=>(
-                    <Post key={p._id} post={p} />
+                    <Post key={p._id} post={p} posts = {posts} setposts={setPosts}/>
                 ))}  
             </div>
         </div> 

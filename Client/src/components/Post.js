@@ -1,13 +1,14 @@
 import React, { useState,useEffect, useContext } from "react";
 import {AiOutlineHeart,AiFillHeart, AiOutlineCloudServer} from "react-icons/ai";
-import {FaCheckCircle,FaRegComment} from "react-icons/fa";
+import {FaCheckCircle,FaRemoveFormat} from "react-icons/fa";
+import  {RiDeleteBin6Line} from "react-icons/ri";
 import "../styles/Post.css";
 import axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-function Post({post}){
+function Post({post,posts,setposts}){
     const [like,setLike] = useState(post.likers.length);
     const [isLiked,setIsLiked] = useState(false);
     const [user,setUser] =useState({});
@@ -37,6 +38,15 @@ function Post({post}){
         setLike(isLiked ? like-1 : like+1);
         setIsLiked(!isLiked);
     }
+    const deleteHandeler = ()=>{
+        try{
+            axios.delete('/post/'+post._id);
+            const updatedMessages = posts.filter(m => m._id !== post._id);
+            setposts(updatedMessages);
+        }catch(error){
+            console.log("error");
+        }
+    }
     return(
         <div className="post">
             <div className="user-avatar">
@@ -46,16 +56,19 @@ function Post({post}){
             </div>
             <div className="post-content">
                 <div className="post-user-info">
+                <Link to ={`/profile/${user.pseudo}`} className="link-user-avatar" >
                     <h4>{user.pseudo}</h4>
+                </Link>
+
                     <FaCheckCircle className="icon"/>
-                    <span> @hahaha . {format(post.createdAt)}</span>
+                    <span> {user?.email} . {format(post.createdAt)}</span>
                 </div> 
                 <p className="post-text">
                    {post?.message}
                 </p>
                 <img  className="post-img" src={PF+post.picture} alt="" />
                 <div className="post-icons">
-                    <div className="icon"  ><FaRegComment /> {post.comment}</div>
+                    { user._id === currentUser._id && <div className="icon"  onClick={deleteHandeler}  ><RiDeleteBin6Line />Supprimer</div>}
                     <div className="icon" onClick={likeHandeler} >{isLiked?<AiFillHeart  />:<AiOutlineHeart />}{like}</div>
                 </div>
             </div>

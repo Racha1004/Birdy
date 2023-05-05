@@ -6,6 +6,7 @@ import '../styles/Home.css'
 import SideBar from "./SideBar";
 import ListFollow from "./ListFollow";
 import { AuthContext } from "../context/AuthContext";
+import Footer from "./Footer";
 
 function Home(){
     const { user } = useContext(AuthContext);
@@ -21,7 +22,7 @@ function Home(){
                 </div>
             </div>
             
-            <footer className="footer">Footer</footer>
+           <Footer/>
         </section>
     );
 }
