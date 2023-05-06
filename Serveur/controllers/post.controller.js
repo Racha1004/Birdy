@@ -155,17 +155,26 @@ module.exports.createPost = async (req, res) => {
 // Find a single post with a postId
 module.exports.getPostById = async (req, res) => {
 
-    if(!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID unknow : " + req.params.id);
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknow : " + req.params.id);
 
-    try {
-        const post = await PostModel.findById(req.params.id).populate("posterId", "pseudo");
-        res.status(200).json(post);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-    
-}
+  try {
+    const post = await PostModel.findById(req.params.id)
+      .populate("posterId", "pseudo")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "commenterId",
+          select: "pseudo",
+        },
+        options: { sort: { createdAt: -1 } }, // tri par ordre décroissant de la date de création
+      });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 // Find all posts on a user's feed
 module.exports.getTimeLinePosts = async(req,res)=>{
   try{

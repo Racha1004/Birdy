@@ -35,10 +35,11 @@ function Post({post,posts,setposts}){
         const fetchComments = async () => {
           const res = await axios.get(`/post/${post._id}`);
           setComments(res.data.comments);
-          //setposts(posts.map((p) => (p._id === post._id ? res.data : p)));
         };
         fetchComments();
-    }, [comments]);
+      }, [post._id]);
+      
+    
 
     
     const likeHandeler = ()=>{
@@ -91,14 +92,12 @@ function Post({post,posts,setposts}){
     const handleCommentDelete = async (commentId) => {
         try {
             if (Array.isArray(comments)) {
-
-            console.log("test0",comments);
           const commentToDelete = comments.find((c) => c._id === commentId);
-          console.log("test",commentToDelete);
           if (commentToDelete) {
-            console.log("com",commentId);
-            console.log("co",commentToDelete._id)
-            const res = await axios.patch(`/post/delete-comment-post/${post._id}`,{_id : commentToDelete._id});
+            console.log("post",post._id);
+            console.log("com",commentToDelete._id)
+            const res = await axios.patch("/post/delete-comment-post/"+post._id,
+            {commentId : commentToDelete._id});
            
             setComments(res.data.comments);
             console.log("Comment deleted");
@@ -143,7 +142,7 @@ function Post({post,posts,setposts}){
     
             {showComments && (
               <div className="post-comments">
-                {post.comments.map((comment) => (
+                {comments.map((comment) => (
                   <div key={comment._id} className="post-comment">
                     <div className="comment-user-info">
                       <h4>{currentUser.pseudo}</h4>
