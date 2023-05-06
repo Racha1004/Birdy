@@ -62,3 +62,65 @@
     align-items: center;
     display: flex;
 }
+
+.post-comments {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .post-comment {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  .comment-user-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .comment-user-info h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .comment-user-info span {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  
+  .comment-text {
+    font-size: 1rem;
+  }
+  
+  .post-comments form {
+    margin-top: 10px;
+    display: flex;
+  }
+  
+  .post-comments input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+  }
+  
+  .post-comments button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .post-comments button:hover {
+    background-color: #3e8e41;
+  }
+  

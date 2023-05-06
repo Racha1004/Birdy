@@ -1,0 +1,115 @@
+Post({
+        posterId: {
+        type : String,
+        required: true
+    },
+    message: {
+        type: String,
+        maxlength: 500,
+        trim : true
+    },
+    picture: {
+        type: String,
+        default: ''
+    },
+    video: {
+        type: String,
+        default: ''
+    },
+    likers: {
+        type: [String],
+        default : [],
+    },
+    comments: {
+        type: [
+        {
+            commenterId: String,
+            commenterPseudo: String,
+            text: String,
+            timestamp: Number
+        }
+      ],
+        required : true
+    },
+    retweeters: {
+        type: [
+          {
+            retweeterId: String,
+            retweeterPseudo: String,
+            retweetDate: Date
+          }
+        ],
+        default: []
+      }
+  },
+    {
+        timestamps: true
+    }
+);
+
+
+// UserModel 
+
+User (
+  {
+    pseudo: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 3,
+      maxLength: 45
+    },
+    email: {
+      type: String,
+      required: true,
+      validate: [isEmail],
+      lowercase: true,
+      trim: true
+    },
+    password: {
+      type: String,
+      required: true,
+      maxlength: 1024,
+      minlength: 8
+    },
+    profilePicture: {
+      type: String,
+      default: ""
+    },
+    coverPicture: {
+      type: String,
+      default: ""
+    },
+    bio: {
+      type: String,
+      maxlength: 1024
+    },
+    followers: {
+      type: Array,
+      default : []
+    },
+    following: {
+      type: Array,
+      default : []
+    },
+    likes: {
+      type: Array,
+      default : []
+    },
+    retweet: {
+      type: Array,
+      default: []
+    },
+    profileViews: {
+      type: Number,
+      default: 0
+    },
+    
+  },
+  {
+    timestamps: true
+  }
+);
+
+ 
