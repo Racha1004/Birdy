@@ -64,7 +64,6 @@ function NewPost({page}){
                             onChange={(e)=>{setFile(e.target.files[0])}}
                             />
                 </label>
-                <FaChartBar className="icon" />
                 <button type="submit" className="postMessage">Share</button>
             </form>
         </div>

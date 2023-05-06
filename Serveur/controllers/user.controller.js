@@ -124,8 +124,8 @@ module.exports.getFollowings = async (req, res) => {
         );
         let followingList = [];
         followings.map((friend)=>{
-            const {_id,pseudo,profilePicture} = friend;
-            followingList.push( {_id,pseudo,profilePicture});
+            const {_id,pseudo,profilePicture,email} = friend;
+            followingList.push( {_id,pseudo,profilePicture,email});
         });
 
         res.status(200).json(followingList);
@@ -145,8 +145,8 @@ module.exports.getFollowers = async (req, res) => {
         );
         let followersList = [];
         followerss.map((friend)=>{
-            const {_id,pseudo,profilePicture} = friend;
-            followersList.push( {_id,pseudo,profilePicture});
+            const {_id,pseudo,profilePicture,email} = friend;
+            followersList.push( {_id,pseudo,profilePicture,email});
         });
         res.status(200).json(followersList);
     }catch(error){

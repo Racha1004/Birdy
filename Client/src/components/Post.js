@@ -67,7 +67,7 @@ function Post({post,posts,setposts}){
                 <p className="post-text">
                    {post?.message}
                 </p>
-                <img  className="post-img" src={PF+post.picture} alt="" />
+               { post.picture && <img  className="post-img" src={ PF+post.picture} alt="" />}
                 <div className="post-icons">
                     { user._id === currentUser._id && <div className="icon"  onClick={deleteHandeler}  ><RiDeleteBin6Line />Supprimer</div>}
                     <div className="icon" onClick={likeHandeler} >{isLiked?<AiFillHeart  />:<AiOutlineHeart />}{like}</div>

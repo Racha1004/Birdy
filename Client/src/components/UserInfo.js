@@ -53,7 +53,7 @@ function UserInfo({user}){
             </div> 
             <div className="rightBarInfoItem">
                 <span className="rightBarInfoKey">Nombre de vues :</span>
-                <span className="rightBarInfoValue">{user?.profileViews}</span>
+                <span className="rightBarInfoValue">{user.profileViews?user.profileViews: 0}</span>
             </div>
         </div>
     )

@@ -54,7 +54,6 @@ function SideBar({user}){
                     </li>
                     
                 </ul>
-                <div className="Stat" >Les stat sont :        10  ,,  100</div>
             </div>
             <ListFollow nom ="Followings" user={user}/>
 

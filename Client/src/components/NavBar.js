@@ -1,23 +1,16 @@
-import React, { useContext,useState,useEffect } from "react";
+import React, { useContext,useState } from "react";
 import {FaDove,FaHome,FaHashtag,FaBell,FaEnvelope,FaSearch,FaChevronDown} from "react-icons/fa";
-import bird from"./Images/bird.png"
 import "../styles/NavBar.css"
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Logout from "./Logout";
 import axios from "axios";
 import { useHistory } from "react-router";
-import Feed from "./Feed";
 
 function NavBar(props){
-    //const {user} = useContext()
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    //const { user } = useContext(AuthContext);
     const { user, dispatch } = useContext(AuthContext);
     const history = useHistory();
-    const [posts, setPosts] = useState([]);
     const [searchInput, setSearchInput] = useState("");
-    const [profile,setProfile] = useState(true);
     const [isChecked, setIsChecked] = useState(false);
     const [isCheckedPseudo, setIsCheckedPseudo] = useState(false);
 
@@ -103,7 +96,7 @@ function NavBar(props){
               <div className="user-img-wrapper">
                     <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"} alt=""/> 
               </div>
-              <a href="#" className="user-link">{user.pseudo}</a>
+              <div className="user-link">{user.pseudo}</div>
                  <FaChevronDown  className="icon"/>
        </Link>
       </div>
