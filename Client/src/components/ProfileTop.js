@@ -11,7 +11,7 @@ function ProfileTop({user}){
     const [followed,setFollowed]=useState(false);
     const [fileCover,setFileCover]=useState(null);
     const [fileProfile,setFileProfile]=useState(null);
-    const {user:currentUser} = useContext(AuthContext);
+    const {user:currentUser, dispatch} = useContext(AuthContext);
 
     const submitHandeler = async(e)=>{
         e.preventDefault();
@@ -47,6 +47,9 @@ function ProfileTop({user}){
         // Ensuite on le poste !
         try{
             await axios.put("/user/"+currentUser._id, newInfos);
+            const res = await axios.get("/user?username="+currentUser.pseudo);
+            dispatch({ type: "PHOTO_CHANGE", payload: res.data });
+
             window.location.reload();
         }catch(error){
             

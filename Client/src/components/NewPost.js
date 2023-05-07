@@ -2,7 +2,7 @@ import React, { useContext,useRef, useState } from "react";
 import {AiOutlineStar} from "react-icons/ai";
 import {CgProfile} from "react-icons/cg";
 
-import {FaImage,FaCamera,FaChartBar} from "react-icons/fa";
+import {FaImage} from "react-icons/fa";
 import "../styles/NewPost.css";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
@@ -52,7 +52,7 @@ function NewPost({page}){
 
             <form className="header-post" onSubmit={submitHandeler}>
                 <div className="header-img-wrapper">
-                    <img src={user.profilePicture? PF + user.profilePicture : PF + "profil.png"} alt=""/>
+                    <img src={user.profilePicture ? PF + user.profilePicture : PF + "profil.png"} alt=""/>
                 </div>
                 <textarea type="text" placeholder={"What's happening "+user.pseudo+" ?"} ref={desc}/>
                 <label htmlFor="shareImg" className="icon" >

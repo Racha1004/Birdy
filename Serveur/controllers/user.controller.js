@@ -214,7 +214,7 @@ module.exports.incrementProfileViews = async (req, res) => {
 }
 module.exports.getNbrViews = async (req, res) => {
     try {
-      const currentUser = await UserModel.findOne({pseudo: req.params.id});
+      const currentUser = await UserModel.findById(req.params.id);
       console.log(req.params.id);
       if (!currentUser) {
         return res.status(404).json({ message: "Utilisateur non trouvé" });

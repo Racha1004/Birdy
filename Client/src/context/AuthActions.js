@@ -40,3 +40,8 @@ export const UnFollow = (userId)=>({
     type  :"UNFOLLOW",
     payload : userId,
 });
+
+export const changePhoto = (userId)=>({
+    type  :"PHOTO_CHANGE",
+    payload : userId,
+});

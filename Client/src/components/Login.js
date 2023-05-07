@@ -25,7 +25,6 @@ export default function Login() {
       console.log(err);
     }
   };
-  console.log(user);
   const handleRegister = () => {
     history.push("/register");
   };

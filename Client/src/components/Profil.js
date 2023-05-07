@@ -17,7 +17,6 @@ function Profil(){
     const [user,setUser] =useState({});
     const username = useParams().username;
     const [maChaine, setMaChaine] = useState("");
-    const [count, setCount] = useState(0);
     const {user:currentUser} = useContext(AuthContext);
 
     useEffect (()=>{

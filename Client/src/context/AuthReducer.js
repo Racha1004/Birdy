@@ -59,7 +59,13 @@
                     ...state.user,
                     following: state.user.following.filter(flwng=>flwng !== action.payload),
                     },
-                };      
+                }; 
+            case "PHOTO_CHANGE":
+                return {
+                    user: action.payload,
+                    isFetching: false,
+                    error: false,
+                }; 
             default:
             return state;
         }
