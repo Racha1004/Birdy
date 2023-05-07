@@ -61,7 +61,3 @@ function Profil(){
 
 export default Profil ;
 
-/*
-<ListPosts/> => on remplace avec ça les post 
-
-*/

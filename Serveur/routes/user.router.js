@@ -1,9 +1,6 @@
 const router = require('express').Router();
 const authController = require('../controllers/auth.controller');
 const userController = require('../controllers/user.controller');
-/*const uploadController = require('../controllers/upload.controller');
-const multer = require('multer');
-const upload = multer();*/
 
 //auth
 router.post("/register", authController.signUp);
@@ -28,7 +25,5 @@ router.patch("/unfollow/:id", userController.unfollow);
 router.get("/followings/:id", userController.getFollowings);
 router.get("/followers/:id", userController.getFollowers);
 
-//upload 
-//router.post('/upload', upload.single('file'), uploadController.uploadProfilPic);
 
 module.exports = router;
