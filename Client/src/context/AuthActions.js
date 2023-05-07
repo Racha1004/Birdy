@@ -41,7 +41,7 @@ export const UnFollow = (userId)=>({
     payload : userId,
 });
 
-export const changePhoto = (userId)=>({
+export const changePhoto = (user)=>({
     type  :"PHOTO_CHANGE",
-    payload : userId,
+    payload : user,
 });
